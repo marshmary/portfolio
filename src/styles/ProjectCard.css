@@ -1,0 +1,20 @@
+.project_card {
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    color: #fff;
+    border: none;
+}
+
+.project_card_name {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.project_card_desc {
+    font-size: 0.8rem;
+}
+
+.project_card_button {
+    font-weight: bold;
+    background-color: #fff;
+}
