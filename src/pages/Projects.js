@@ -12,7 +12,7 @@ const Projects = () => {
                 type: "Personal",
                 name: "Self profile",
                 description: "My online profile, I will support multiple languages in the future.",
-                url: "",
+                url: "https://phutt.netlify.app/",
             },
             styling: {
                 colorPrimary: "#F79DA4",

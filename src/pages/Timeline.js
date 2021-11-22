@@ -60,7 +60,7 @@ const Timeline = () => {
                                     contentArrowStyle={{ display: "none" }}
 
                                     // style for date
-                                    dateClassName={`${(eventCount % 2 !== 0) ? "text-start" : "text-end"} px-4`}
+                                    dateClassName={`text-center ${(eventCount % 2 !== 0) ? "text-md-start" : "text-md-end"} w-100 px-4`}
 
                                     // style for icon
                                     iconStyle={{ background: `${colorSelected}`, color: '#fff' }}
