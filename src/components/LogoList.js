@@ -30,6 +30,11 @@ const LogoList = ({ className = "", style = {} }) => {
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
         },
         {
+            title: "Vue",
+            page: "https://v3.vuejs.org/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',
+        },
+        {
             title: "Adobe XD",
             page: "https://www.adobe.com/hk_en/products/xd.html",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg',

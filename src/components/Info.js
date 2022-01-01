@@ -20,7 +20,7 @@ const Info = ({ className = "", style = {} }) => {
                     <Icon icon="envelope" />
                     <span className="ms-2">phutt2201@gmail.com</span>
                 </p>
-                <p className="info_p my-2">I'm a web developer <br></br> I'm really into UI design with React and API with .NET technologies</p>
+                <p className="info_p my-2">I'm a web developer <br></br> I'm really into UI design and working with API</p>
             </div>
         </div>
     );
