@@ -66,7 +66,7 @@ const LogoBar = ({ className = "", style = {}, iconList = [], title = "", half =
 
             {/* Hidden icon list */}
             <div className="collapse pt-2" id={title}>
-                <div className="d-flex justify-content-around">
+                <div className="d-flex justify-content-evenly">
                     {
                         iconList.map(icon => {
                             countHidden++;

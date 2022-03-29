@@ -20,19 +20,29 @@ const LogoList = ({ className = "", style = {} }) => {
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
         },
         {
-            title: "Bootstrap",
-            page: "https://getbootstrap.com/",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg',
-        },
-        {
             title: "React",
             page: "https://reactjs.org/",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
         },
         {
+            title: "NextJS",
+            page: "https://nextjs.org/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',
+        },
+        {
             title: "Vue",
             page: "https://v3.vuejs.org/",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',
+        },
+        {
+            title: "Bootstrap",
+            page: "https://getbootstrap.com/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg',
+        },
+        {
+            title: "Tailwind",
+            page: "https://tailwindcss.com/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg',
         },
         {
             title: "Adobe XD",

@@ -74,10 +74,10 @@ const Projects = () => {
         },
         {
             info: {
-                type: "Unknown",
-                name: "Future",
-                description: "T͎̟͍̝ͣ̄̀̔͞h͆̏͏̫͇e͋͏̻̫̥͚͈̱̣ͅ ̙̜͑̋̚͝h̸̻̜̫̒̾ͅr̹̦̀̾͑̒́ẽ̏͏̝͕̣̹f̳̫̤̜͙͎̓͘ ̵̜̠̪͒̅͆a̶̻͎̤͖̰̗̳̎͌̔͋t̢̥͙̮̱̫̳̉͗̚t̵̘̹͖̝̣͛̂ͪ̌r̬̲̗̓̄́i̢̮̯̙̠͉̱̻̭̎̐̎̚b̧͖̬̎̐u̧͚͔̪̥̒̽̍t̸̰͖̣͉͖͙̓ẻ̢̱̹̞͕͙͕̜̄ͅ ͯͩ̿ͨ͏͙͙r̻̲̳͓̖͉̦̟̊͞e̩͍̼͓̓ͧ͞q̴̜̠̹͔̝͖̮̒͛̑ͣͅu̔ͩ̎҉͔̹̥̹̲̘̖i̮̳͙̭̰͙̒͊͠ř̛̹̭͛͐e̬̰͇̞̺̦̩ͯ̑̽̊͜ͅs̛̤̠̲̞͔͖ͨͬͅ ̛̗͇̮̯̜̙̲̘̒ͩͭ̓ḁ̸̖̻̝̭̖̹ͯͪ̓ ̱͈̬̈́̏ͦ̾́v̢͈̜̣̙̰̯͉̚ͅa̹̤͍̩͍̙̩͗̋ͦ̃͟l̎͒̚҉̼̟̪͇i̵͕̜̳̙̫̰̳̒ḍ̴͔̩̹̲̯̪͍̄ͭ̅ ͩ̍ͯ̅͏͖̤̞͇̫͔̘v̜̞̭͌̀a̡̮̯̭͚̟̳̩͎͛̏̾̒l̪̰̟͕ͩͥ͢u̷͉̹̳͈͇͙̎e̝̱̞̪ͪ́̈͋͢ ̞̱̬̬̝̓̓̂͟t̷̳̣̝̲̗̳̅ͣ͐͊ǫ̙̲͚̈́ ͈̖̇ͮ͜b̡̹̦̠̠̹̺ͪ͂̋̅e̗͔̺̹̯̻̤̿̄̿̀ ̘̞̖̙͍ͪ͒͜a͎͇̦͈̯̤͌͝ć̴͎̖̮͆̅̃c̲͈̑ͬ́ë̢̜͍̩̂̆͛s̻͈̃͠s͒̎҉̼̣͈ǐ̛̜̗b̞̯̥̜ͦ̚͠ļ͖̣ͥ̊ͬ́e̝̱̲̫͚̯̔͆͞ͅ.̧͚̖͚͉̯̞̎ ̛̯̥̹͕̅ͮP̵̪̱̣̖̝̙̱̪̓rͦ̎̅͏̪̗̜̟̜o̥̠̠̱̗̳ͩ͌͟v̪͈̀̏ͨ͝ĩ̲̯̦̖͎͓ͮͮ̅͟d̝̙̥̪̘̒͘e̢̮͓͙͇ͪ̋ ̵͚͓͎̲̦̣̂ͨͤ̈́ͅa̵͈̝̭̦̗͊̅ ̜̖̮̫̪͕̱́̔̅ͪ̀ṿ̘̞͍ͭ̋ͨ́å̘̪̓͝l͎͔̩ͤ͢ì̈́͌҉̜̳̥̘ͅd͓̪̭͔̻͇ͩ̾ͪ̒͡",
-                url: "",
+                type: "Group",
+                name: "Draplus",
+                description: "Online group communication when discussing projects is always a pain when sharing ideas among group members. We design a solution for this problem by providing online collaborating drawing and group chat included.",
+                url: "https://draplus.netlify.app/",
             },
             styling: {
                 colorPrimary: "#66B8F1",
