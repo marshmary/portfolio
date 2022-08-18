@@ -5,21 +5,6 @@ const LogoList = ({ className = "", style = {} }) => {
     // Icon & Page url list
     const frontEndList = [
         {
-            title: "HTML5",
-            page: "https://developer.mozilla.org/en-US/docs/Glossary/HTML5",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
-        },
-        {
-            title: "CSS3",
-            page: "https://developer.mozilla.org/en-US/docs/Web/CSS",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
-        },
-        {
-            title: "JS",
-            page: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
-        },
-        {
             title: "React",
             page: "https://reactjs.org/",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
@@ -45,50 +30,70 @@ const LogoList = ({ className = "", style = {} }) => {
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg',
         },
         {
+            title: "Figma",
+            page: "https://www.figma.com/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',
+        },
+        {
             title: "Adobe XD",
             page: "https://www.adobe.com/hk_en/products/xd.html",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-plain.svg',
         },
+        {
+            title: "HTML5",
+            page: "https://developer.mozilla.org/en-US/docs/Glossary/HTML5",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+        },
+        {
+            title: "CSS3",
+            page: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+        },
+        {
+            title: "JS",
+            page: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+        },
     ]
 
     const backEndList = [
-        {
-            title: "C#",
-            page: "https://docs.microsoft.com/en-us/dotnet/csharp/",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
-        },
         {
             title: "ASP.NET Core",
             page: "https://dotnet.microsoft.com/",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg',
         },
         {
-            title: "PHP",
-            page: "https://www.php.net/",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg',
+            title: "FastAPI",
+            page: "https://fastapi.tiangolo.com/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg',
         },
         {
             title: "Laravel",
             page: "https://laravel.com/",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg',
         },
+        {
+            title: "C#",
+            page: "https://docs.microsoft.com/en-us/dotnet/csharp/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
+        },
+        {
+            title: "Python",
+            page: "https://www.python.org/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+        },
+        {
+            title: "PHP",
+            page: "https://www.php.net/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg',
+        },
     ]
 
     const databaseList = [
         {
-            title: "PostgreSQL",
-            page: "https://www.postgresql.org/",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
-        },
-        {
             title: "SQL Server",
             page: "https://www.microsoft.com/en-us/sql-server/sql-server-downloads",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg',
-        },
-        {
-            title: "MySQL",
-            page: "https://www.mysql.com/",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
         },
         {
             title: "Mongo",
@@ -96,9 +101,24 @@ const LogoList = ({ className = "", style = {} }) => {
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
         },
         {
+            title: "PostgreSQL",
+            page: "https://www.postgresql.org/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
+        },
+        {
+            title: "MySQL",
+            page: "https://www.mysql.com/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+        },
+        {
             title: "Redis",
             page: "https://redis.io/",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg',
+        },
+        {
+            title: "DynamoDB",
+            page: "https://aws.amazon.com/dynamodb/",
+            url: 'https://amazon-dynamodb-labs.com/images/Amazon-DynamoDB.png',
         },
     ]
 
@@ -107,6 +127,16 @@ const LogoList = ({ className = "", style = {} }) => {
             title: "Git",
             page: "https://git-scm.com/",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+        },
+        {
+            title: "Docker",
+            page: "https://www.docker.com/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg',
+        },
+        {
+            title: "Kubernetes",
+            page: "https://kubernetes.io/",
+            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg',
         },
         {
             title: "Github",
@@ -122,11 +152,6 @@ const LogoList = ({ className = "", style = {} }) => {
             title: "Heroku",
             page: "https://www.heroku.com",
             url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-plain.svg',
-        },
-        {
-            title: "Docker",
-            page: "https://www.docker.com/",
-            url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg',
         },
         {
             title: "Unity",

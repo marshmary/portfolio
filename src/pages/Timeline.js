@@ -20,13 +20,19 @@ const Timeline = () => {
             location: "Can Tho, Viet Nam",
             company: "FPT Soft",
             time: "09/2021 - 12/2021"
+        },
+        {
+            title: "Internship",
+            location: "Can Tho, Viet Nam",
+            company: "Biwoko",
+            time: "06/2022 - 08/2022"
         }
     ];
 
     // Count to detect even and odd number
     var eventCount = 0;
 
-    // Color 
+    // Color
     const colorList = ["#66B8F1", '#F69DA4', '#D0A78A'];
 
     return (
