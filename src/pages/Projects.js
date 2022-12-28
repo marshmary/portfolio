@@ -13,6 +13,7 @@ const Projects = () => {
         name: "Neru",
         description: "Landing page for my favorite Vsinger",
         url: "https://neru.netlify.app/",
+        stack: "ReactTS",
       },
       styling: {
         colorPrimary: "#73a6a4",
@@ -27,6 +28,7 @@ const Projects = () => {
         description:
           "My capstone project in university - hum to song & song sharing platform",
         url: "https://avisapp.netlify.app/",
+        stack: "ReactTS, Dotnet, FastAPI, MongoDB, PostgreSQL AWS",
       },
       styling: {
         colorPrimary: "#152432",
@@ -41,6 +43,7 @@ const Projects = () => {
         description:
           "Online group communication when discussing projects is always a pain when sharing ideas among group members. We design a solution for this problem by providing online collaborating drawing and group chat included.",
         url: "https://draplus.netlify.app/",
+        stack: "ReactTS, Dotnet, SignalR, MongoDB",
       },
       styling: {
         colorPrimary: "#66B8F1",
@@ -51,24 +54,11 @@ const Projects = () => {
     {
       info: {
         type: "Group",
-        name: "Angeloid",
-        description:
-          "An anime wiki website – a platform for user to search, view detail, rating or review their favorite anime and create their own discussion thread. Our most improment is that help user to search anmime with image by Deep Learning.",
-        url: "",
-      },
-      styling: {
-        colorPrimary: "#73a6a4",
-        colorSecondary: "#d6e1df",
-      },
-      isHorizontal: false,
-    },
-    {
-      info: {
-        type: "Group",
         name: "Kronii",
         description:
           "A web system in which FPT Soft Academy can reduce the time to manage all processes including student management, class management, cost management, and third party companies management by automating almost all main parts of the processes",
         url: "https://kronii.netlify.app/",
+        stack: "ReactJS, Dotnet, PostgreSQL",
       },
       styling: {
         colorPrimary: "#37A5C1",
@@ -78,10 +68,25 @@ const Projects = () => {
     },
     {
       info: {
+        type: "Group",
+        name: "Hocsu",
+        description: "A timeline for learning Viet Nam history",
+        url: "https://hocsu.netlify.app/",
+        stack: "ReactTS, Firebase",
+      },
+      styling: {
+        colorPrimary: "#73a6a4",
+        colorSecondary: "#d6e1df",
+      },
+      isHorizontal: false,
+    },
+    {
+      info: {
         type: "Personal",
         name: "Lapis",
         description: "Anime wallpaper every day",
-        url: "https://lapis.wiki/",
+        url: "https://lapis.netlify.app/",
+        stack: "VueJS, Dotnet, MongoDB",
       },
       styling: {
         colorPrimary: "#D0A78A",

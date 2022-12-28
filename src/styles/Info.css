@@ -1,17 +1,17 @@
 .info_image {
-    min-height: 12rem;
-    width: 12rem;
-    border-radius: 50%;
-    background-image: url("../static/profile_images.webp");
-    background-repeat: no-repeat;
-    background-size: 170%;
-    background-position: 2% 2%;
+  min-height: 12rem;
+  width: 12rem;
+  border-radius: 50%;
+  background-image: url("../static/profile_images.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 50% 50%;
 }
 
 .info_p {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .info_fullname {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
