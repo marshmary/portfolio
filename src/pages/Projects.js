@@ -56,7 +56,7 @@ const Projects = () => {
         type: "Group",
         name: "Kronii",
         description:
-          "A web system in which FPT Soft Academy can reduce the time to manage all processes including student management, class management, cost management, and third party companies management by automating almost all main parts of the processes",
+          "A web system in which FSoft Academy can reduce the time to manage all processes including student management, class management, cost management, and third party companies management by automating almost all main parts of the processes",
         url: "https://kronii.netlify.app/",
         stack: "ReactJS, Dotnet, PostgreSQL",
       },

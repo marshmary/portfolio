@@ -17,8 +17,8 @@ const Timeline = () => {
         },
         {
             title: "Internship",
-            location: "Can Tho, Viet Nam",
-            company: "FPT Soft",
+            location: "Ho Chi Minh, Viet Nam",
+            company: "FSoft",
             time: "09/2021 - 12/2021"
         },
         {
@@ -26,7 +26,13 @@ const Timeline = () => {
             location: "Can Tho, Viet Nam",
             company: "Biwoko",
             time: "06/2022 - 08/2022"
-        }
+        },
+        {
+            title: "OJT",
+            location: "Can Tho, Viet Nam",
+            company: "PTN Global",
+            time: "02/2023 - Now"
+        },
     ];
 
     // Count to detect even and odd number
