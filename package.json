@@ -11,6 +11,7 @@
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
+    "@netlify/plugin-nextjs": "^5.11.4",
     "@next/mdx": "^14.2.13",
     "@tailwindcss/typography": "^0.5.15",
     "@types/mdx": "^2.0.13",
