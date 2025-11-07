@@ -1,0 +1,29 @@
+{
+  "category": "Development Skills",
+  "skills": [
+    {
+      "uid": "dev-languages",
+      "title": "Languages",
+      "description": "Python, Groovy, C#, JavaScript, TypeScript",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 0
+    },
+    {
+      "uid": "dev-frameworks",
+      "title": "Framework",
+      "description": "FastAPI, Dotnet, React, NextJS, OpenCart, Vue",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 1
+    },
+    {
+      "uid": "dev-tools",
+      "title": "Other tools",
+      "description": "Git, Jira, Figma.",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 2
+    }
+  ]
+}

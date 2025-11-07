@@ -1,0 +1,17 @@
+{
+  "id": "avis",
+  "name": "Avis",
+  "description": "Capstone project: hum to song & song sharing platform.",
+  "link": "https://avisapp.netlify.app/",
+  "video": "https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0",
+  "longDescription": "Avis is a capstone project that allows users to hum a melody and find matching songs. It also features a platform for sharing and discovering music through humming.",
+  "technologies": ["React", "Next.js", "Machine Learning", "Audio Processing"],
+  "keyFeatures": [
+    "Hum-to-song matching using audio recognition",
+    "Song sharing platform",
+    "User profile and history",
+    "Real-time audio processing"
+  ],
+  "order": 0,
+  "featured": true
+}

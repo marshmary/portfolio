@@ -1,0 +1,17 @@
+{
+  "id": "neru",
+  "name": "Neru",
+  "description": "Landing page for my favorite Vsinger.",
+  "link": "https://neru.netlify.app/",
+  "video": "https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0",
+  "longDescription": "A beautifully designed landing page dedicated to Neru, a virtual singer (Vsinger). The page showcases Neru's music, artwork, and latest updates with an aesthetic design that reflects the artist's style.",
+  "technologies": ["HTML", "CSS", "JavaScript", "Animation"],
+  "keyFeatures": [
+    "Responsive landing page design",
+    "Smooth animations and transitions",
+    "Music player integration",
+    "Gallery of artwork"
+  ],
+  "order": 3,
+  "featured": false
+}

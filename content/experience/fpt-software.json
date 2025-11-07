@@ -1,0 +1,27 @@
+{
+  "id": "fpt-software",
+  "company": "FPT Software",
+  "title": "Internship Software Engineer",
+  "start": "09/2021",
+  "end": "12/2021",
+  "link": "https://fsoft-academy.edu.vn/",
+  "employmentType": "Internship",
+  "responsibilities": [
+    "Learned software engineering fundamentals",
+    "Worked on training projects and assignments",
+    "Practiced coding standards and version control",
+    "Participated in team collaboration exercises"
+  ],
+  "achievements": [
+    "Completed intensive software engineering training program",
+    "Developed strong foundation in programming and software design",
+    "Successfully completed all assigned projects"
+  ],
+  "technologies": [
+    "C#",
+    ".NET",
+    "SQL Server",
+    "Git"
+  ],
+  "order": 2
+}

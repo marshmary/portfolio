@@ -1,0 +1,53 @@
+{
+  "category": "Cloud Native DevOps Skills",
+  "skills": [
+    {
+      "uid": "devops-cloud",
+      "title": "Cloud Computing Platforms",
+      "description": "AWS, Digital Pacific, Azure, Firebase",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 0
+    },
+    {
+      "uid": "devops-provisioning",
+      "title": "Provisioning",
+      "description": "Terraform",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 1
+    },
+    {
+      "uid": "devops-cicd",
+      "title": "Continuous Integration and Continuous Deployment (CI/CD)",
+      "description": "Jenkins, Github Actions",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 2
+    },
+    {
+      "uid": "devops-containers",
+      "title": "Containerization and Orchestration",
+      "description": "Docker, Containerd, Kubernetes",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 3
+    },
+    {
+      "uid": "devops-monitoring",
+      "title": "Monitoring, Logging, and Observability",
+      "description": "Grafana, Prometheus, Loki, ELK Stack",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 4
+    },
+    {
+      "uid": "devops-database",
+      "title": "Database",
+      "description": "MariaDB, Sql Server, MongoDB, MySQL, Redis, DynamoDB",
+      "link": "",
+      "proficiencyLevel": "Intermediate",
+      "order": 5
+    }
+  ]
+}

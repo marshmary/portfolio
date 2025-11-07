@@ -1,0 +1,20 @@
+{
+  "id": "fpt-university",
+  "school": "FPT University",
+  "title": "Bachelor Degree - Software Engineer",
+  "start": "2019",
+  "end": "2023",
+  "link": "https://daihoc.fpt.edu.vn/",
+  "description": "Bachelor's degree in Software Engineering with focus on modern software development practices, cloud computing, and DevOps methodologies.",
+  "relevantCourses": [
+    "Data Structures and Algorithms",
+    "Object-Oriented Programming",
+    "Database Management Systems",
+    "Software Engineering",
+    "Cloud Computing",
+    "DevOps Practices",
+    "Web Development",
+    "Mobile Development"
+  ],
+  "order": 0
+}

@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#BMad template
+.bmad-core/
+.bmad-infrastructure-devops
+
+# Claude AI
+.claude/
+
+# Serena Tool
+.serena/

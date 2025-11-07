@@ -1,0 +1,33 @@
+{
+  "id": "ptn-global",
+  "company": "PTN Global",
+  "title": "DevOps Engineer",
+  "start": "2023",
+  "end": "Present",
+  "link": "https://www.ptnglobalcorp.com/",
+  "employmentType": "Full-time",
+  "responsibilities": [
+    "Automate infrastructure provisioning using Terraform",
+    "Implement and maintain CI/CD pipelines using Jenkins and GitHub Actions",
+    "Manage containerized applications with Docker and Kubernetes",
+    "Monitor system performance using Grafana, Prometheus, and ELK Stack",
+    "Optimize cloud infrastructure costs and performance"
+  ],
+  "achievements": [
+    "Reduced deployment time by 60% through automation",
+    "Implemented monitoring solution that improved system uptime to 99.9%",
+    "Successfully migrated legacy applications to containerized architecture"
+  ],
+  "technologies": [
+    "AWS",
+    "Terraform",
+    "Jenkins",
+    "GitHub Actions",
+    "Docker",
+    "Kubernetes",
+    "Grafana",
+    "Prometheus",
+    "ELK Stack"
+  ],
+  "order": 0
+}

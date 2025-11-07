@@ -1,0 +1,18 @@
+{
+  "id": "draplus",
+  "name": "Draplus",
+  "description": "A real-time drawing web application, where people can concurrently sketch and share ideas.",
+  "link": "https://draplus.netlify.app/",
+  "video": "https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/XSfIvT7BUWbPRXhrbLed/ee6871c9-8400-49d2-8be9-e32675eabf7e.mp4?_a=DATAdtAAZAA0",
+  "longDescription": "Draplus is a collaborative real-time drawing application that enables multiple users to sketch and brainstorm together. It features a shared canvas where ideas can be visualized and communicated in real-time.",
+  "technologies": ["React", "Socket.io", "Canvas API", "Node.js", "WebRTC"],
+  "keyFeatures": [
+    "Real-time collaborative drawing",
+    "Multiple users can draw simultaneously",
+    "Drawing tools and color palette",
+    "Save and export drawings",
+    "Instant synchronization across clients"
+  ],
+  "order": 2,
+  "featured": true
+}

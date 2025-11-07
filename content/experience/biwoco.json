@@ -1,0 +1,27 @@
+{
+  "id": "biwoco",
+  "company": "Biwoco",
+  "title": "Internship Software Engineer",
+  "start": "06/2022",
+  "end": "08/2022",
+  "link": "https://biwoco.com/",
+  "employmentType": "Internship",
+  "responsibilities": [
+    "Developed web applications using modern JavaScript frameworks",
+    "Collaborated with team members on feature implementation",
+    "Participated in code reviews and testing",
+    "Learned software development best practices"
+  ],
+  "achievements": [
+    "Successfully delivered assigned features on time",
+    "Contributed to improving code quality through reviews",
+    "Gained hands-on experience with professional development workflows"
+  ],
+  "technologies": [
+    "JavaScript",
+    "React",
+    "Node.js",
+    "Git"
+  ],
+  "order": 1
+}
