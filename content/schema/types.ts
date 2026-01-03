@@ -25,18 +25,24 @@ export const ProjectSchema = z.object({
   keyFeatures: z.array(z.string()).default([]),
   challenges: z.string().optional(),
   solutions: z.string().optional(),
-  duration: z.object({
-    start: z.string(),
-    end: z.string().optional(),
-  }).optional(),
+  duration: z
+    .object({
+      start: z.string(),
+      end: z.string().optional(),
+    })
+    .optional(),
   teamSize: z.number().positive().optional(),
   role: z.string().optional(),
   githubUrl: z.string().url().optional().or(z.literal('')),
-  images: z.array(z.string().url()).default([]),
-  metrics: z.array(z.object({
-    label: z.string(),
-    value: z.string(),
-  })).default([]),
+  images: z.array(z.string()).default([]), // Allow both URLs and relative paths
+  metrics: z
+    .array(
+      z.object({
+        label: z.string(),
+        value: z.string(),
+      }),
+    )
+    .default([]),
   featured: z.boolean().default(false),
   order: z.number().default(0),
 })
@@ -62,13 +68,9 @@ export const WorkExperienceSchema = z.object({
   technologies: z.array(z.string()).default([]),
   teamSize: z.number().positive().optional(),
   location: z.string().optional(),
-  employmentType: z.enum([
-    'Full-time',
-    'Part-time',
-    'Contract',
-    'Internship',
-    'Freelance',
-  ]).default('Full-time'),
+  employmentType: z
+    .enum(['Full-time', 'Part-time', 'Contract', 'Internship', 'Freelance'])
+    .default('Full-time'),
   projects: z.array(z.string()).default([]), // Project IDs
   order: z.number().default(0),
 })
@@ -110,7 +112,9 @@ export const SkillCategorySchema = z.object({
   link: z.string().default(''),
 
   // Enhanced fields
-  proficiencyLevel: z.enum(['Beginner', 'Intermediate', 'Advanced', 'Expert']).optional(),
+  proficiencyLevel: z
+    .enum(['Beginner', 'Intermediate', 'Advanced', 'Expert'])
+    .optional(),
   yearsOfExperience: z.number().positive().optional(),
   certifications: z.array(z.string()).default([]),
   relatedProjects: z.array(z.string()).default([]), // Project IDs
@@ -145,15 +149,54 @@ export type SocialLink = z.infer<typeof SocialLinkSchema>
 
 export const ProfileSchema = z.object({
   name: z.string().min(1, 'Name is required'),
+  displayName: z.string().optional(),
   title: z.string().min(1, 'Title is required'),
+  tagline: z.string().optional(),
   email: z.string().email('Must be a valid email'),
+  phone: z.string().optional(),
+  location: z.string().optional(),
   about: z.string().min(1, 'About text is required'),
   resumeUrl: z.string().url().optional(),
   avatar: z.string().url().optional(),
-  location: z.string().optional(),
 })
 
 export type Profile = z.infer<typeof ProfileSchema>
+
+// ============================================================================
+// CERTIFICATIONS SCHEMA
+// ============================================================================
+
+export const CertificationSchema = z.object({
+  id: z.string().min(1, 'Certification ID is required'),
+  name: z.string().min(1, 'Certification name is required'),
+  issuer: z.string().min(1, 'Issuer is required'),
+  credentialUrl: z.string().url().optional(),
+  credentialId: z.string().optional(),
+  issueDate: z.string().optional(),
+  expirationDate: z.string().optional(),
+  description: z.string().optional(),
+  skills: z.array(z.string()).default([]),
+  icon: z.string().optional(),
+  order: z.number().default(0),
+})
+
+export type Certification = z.infer<typeof CertificationSchema>
+
+// ============================================================================
+// GITHUB STATS SCHEMA
+// ============================================================================
+
+export const GitHubStatsSchema = z.object({
+  stars: z.number().nonnegative().optional(),
+  repositories: z.number().nonnegative().optional(),
+  followers: z.number().nonnegative().optional(),
+  following: z.number().nonnegative().optional(),
+  contributions: z.number().nonnegative().optional(),
+  achievements: z.array(z.string()).default([]),
+  topLanguages: z.array(z.string()).default([]),
+})
+
+export type GitHubStats = z.infer<typeof GitHubStatsSchema>
 
 // ============================================================================
 // VALIDATION HELPERS
@@ -166,7 +209,7 @@ export type Profile = z.infer<typeof ProfileSchema>
 export function validateData<T>(
   schema: z.ZodSchema<T>,
   data: unknown,
-  context?: string
+  context?: string,
 ): T {
   try {
     return schema.parse(data)
@@ -184,7 +227,7 @@ export function validateData<T>(
  */
 export function safeValidateData<T>(
   schema: z.ZodSchema<T>,
-  data: unknown
+  data: unknown,
 ): { success: true; data: T } | { success: false; error: z.ZodError } {
   const result = schema.safeParse(data)
   if (result.success) {
@@ -237,4 +280,6 @@ export interface ContentCollection {
   devSkills: SkillCategory[]
   socialLinks: SocialLink[]
   profile: Profile
+  certifications: Certification[]
+  githubStats: GitHubStats
 }

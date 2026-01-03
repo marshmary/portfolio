@@ -10,25 +10,25 @@
       "order": 0
     },
     {
-      "uid": "devops-provisioning",
-      "title": "Provisioning",
-      "description": "Terraform",
+      "uid": "devops-containers",
+      "title": "Containerization and Orchestration",
+      "description": "Docker, Kubernetes, Helm, Docker Compose",
       "link": "",
       "proficiencyLevel": "Advanced",
       "order": 1
     },
     {
-      "uid": "devops-cicd",
-      "title": "Continuous Integration and Continuous Deployment (CI/CD)",
-      "description": "Jenkins, Github Actions",
+      "uid": "devops-iac",
+      "title": "Infrastructure as Code",
+      "description": "Terraform, Ansible, CloudFormation",
       "link": "",
       "proficiencyLevel": "Advanced",
       "order": 2
     },
     {
-      "uid": "devops-containers",
-      "title": "Containerization and Orchestration",
-      "description": "Docker, Containerd, Kubernetes",
+      "uid": "devops-cicd",
+      "title": "Continuous Integration and Continuous Deployment (CI/CD)",
+      "description": "Jenkins, GitHub Actions, GitLab CI, CircleCI",
       "link": "",
       "proficiencyLevel": "Advanced",
       "order": 3
@@ -36,18 +36,42 @@
     {
       "uid": "devops-monitoring",
       "title": "Monitoring, Logging, and Observability",
-      "description": "Grafana, Prometheus, Loki, ELK Stack",
+      "description": "Prometheus, Grafana, ELK Stack, CloudWatch",
       "link": "",
       "proficiencyLevel": "Advanced",
       "order": 4
     },
     {
+      "uid": "devops-vcs",
+      "title": "Version Control",
+      "description": "Git, GitHub, GitLab, Bitbucket",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 5
+    },
+    {
+      "uid": "devops-scripting",
+      "title": "Scripting",
+      "description": "Python, Bash, PowerShell",
+      "link": "",
+      "proficiencyLevel": "Advanced",
+      "order": 6
+    },
+    {
       "uid": "devops-database",
       "title": "Database",
-      "description": "MariaDB, Sql Server, MongoDB, MySQL, Redis, DynamoDB",
+      "description": "PostgreSQL, MySQL, MongoDB",
       "link": "",
       "proficiencyLevel": "Intermediate",
-      "order": 5
+      "order": 7
+    },
+    {
+      "uid": "devops-web",
+      "title": "Web Servers",
+      "description": "Nginx, Apache",
+      "link": "",
+      "proficiencyLevel": "Intermediate",
+      "order": 8
     }
   ]
 }

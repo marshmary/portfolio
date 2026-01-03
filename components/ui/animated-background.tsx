@@ -46,7 +46,7 @@ export function AnimatedBackground({
     }
   }, [defaultValue])
 
-  return Children.map(children, (child: any, index) => {
+  return Children.map(children, (child, index) => {
     const id = child.props['data-id']
 
     const interactionProps = enableHover
@@ -62,10 +62,12 @@ export function AnimatedBackground({
       child,
       {
         key: index,
-        className: cn('relative inline-flex', child.props.className),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        className: cn('relative inline-flex', (child.props as any).className),
         'data-checked': activeId === id ? 'true' : 'false',
         ...interactionProps,
-      },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
       <>
         <AnimatePresence initial={false}>
           {activeId === id && (
@@ -83,7 +85,8 @@ export function AnimatedBackground({
             />
           )}
         </AnimatePresence>
-        <div className="z-10">{child.props.children}</div>
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        <div className="z-10">{(child.props as any).children}</div>
       </>,
     )
   })

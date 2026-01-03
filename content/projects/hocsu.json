@@ -13,5 +13,6 @@
     "Responsive design for mobile and desktop"
   ],
   "order": 1,
-  "featured": true
+  "featured": true,
+  "images": ["/images/projects/hocsu.webp"]
 }

@@ -31,10 +31,12 @@ content/
 ### Projects (`projects/*.json`)
 
 Each project file contains:
+
 - **Core fields**: id, name, description, link, video
 - **Enhanced fields**: longDescription, technologies, keyFeatures, challenges, solutions, duration, teamSize, role, githubUrl, images, metrics, featured, order
 
 Example:
+
 ```json
 {
   "id": "project-id",
@@ -53,10 +55,12 @@ Example:
 ### Work Experience (`experience/*.json`)
 
 Work experience files contain:
+
 - **Core fields**: id, company, title, start, end, link
 - **Enhanced fields**: responsibilities, achievements, technologies, teamSize, location, employmentType, projects, order
 
 Example:
+
 ```json
 {
   "id": "company-name",
@@ -76,10 +80,12 @@ Example:
 ### Education (`experience/*.json`)
 
 Education entries (stored with work experience) contain:
+
 - **Core fields**: id, school, title, start, end, link
 - **Enhanced fields**: description, gpa, honors, relevantCourses, order
 
 Example:
+
 ```json
 {
   "id": "school-name",
@@ -99,6 +105,7 @@ Example:
 Skills are organized into groups (devops, development) with multiple skill categories:
 
 Example:
+
 ```json
 {
   "category": "Skill Category Name",
@@ -121,6 +128,7 @@ Example:
 ### Profile (`profile/about.json`)
 
 Personal profile information:
+
 ```json
 {
   "name": "Full Name",
@@ -136,6 +144,7 @@ Personal profile information:
 ### Social Links (`profile/social.json`)
 
 Social media links array:
+
 ```json
 [
   {
@@ -176,6 +185,7 @@ Social media links array:
 All content is automatically validated against Zod schemas when loaded. If validation fails, you'll see detailed error messages in the console.
 
 To manually validate all content:
+
 ```typescript
 import { validateAllContent } from '@/lib/content-loader'
 
@@ -190,6 +200,7 @@ if (!result.valid) {
 ### Required Fields
 
 Fields marked as required in the schema will cause validation errors if omitted:
+
 - Project: id, name, description, link, video
 - Work Experience: id, company, title, start, end, link
 - Skills: uid, title, description
@@ -197,6 +208,7 @@ Fields marked as required in the schema will cause validation errors if omitted:
 ### Optional Fields
 
 Optional fields can be omitted or set to `null`:
+
 - longDescription
 - technologies
 - keyFeatures
@@ -206,6 +218,7 @@ Optional fields can be omitted or set to `null`:
 ### URL Fields
 
 All URL fields must be valid URLs (http:// or https://):
+
 - link
 - video
 - githubUrl
@@ -215,6 +228,7 @@ Empty strings are accepted for optional URL fields.
 ### Order Field
 
 The `order` field controls display order:
+
 - Lower numbers appear first
 - Default is 0
 - Use increments of 10 for easy reordering (0, 10, 20, 30...)
@@ -232,6 +246,7 @@ See `content/schema/types.ts` for complete schema definitions with all available
 ### Validation Errors
 
 If you see validation errors:
+
 1. Check the error message for the specific field
 2. Verify the field type (string, number, array)
 3. Check required vs optional fields
@@ -241,6 +256,7 @@ If you see validation errors:
 ### Build Failures
 
 If the build fails after updating content:
+
 1. Validate JSON syntax (use a JSON linter)
 2. Check for required fields
 3. Verify data types match schema
@@ -249,6 +265,7 @@ If the build fails after updating content:
 ### Missing Content
 
 If content doesn't appear:
+
 1. Verify the file is in the correct directory
 2. Check the file extension is `.json`
 3. Verify the `order` field (lower = appears first)
@@ -265,6 +282,7 @@ If content doesn't appear:
 ## Future Enhancements
 
 Planned improvements:
+
 - Content management UI
 - Image optimization pipeline
 - Internationalization support

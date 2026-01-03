@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'motion/react'
 import { ExternalLink, Github } from 'lucide-react'
 import { TechBadge } from './tech-badge'
 
@@ -43,14 +42,36 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, renderVideo }: ProjectCardProps) {
-  const hasTechnologies = project.technologies && project.technologies.length > 0
+  const hasTechnologies =
+    project.technologies && project.technologies.length > 0
   const hasFeatures = project.keyFeatures && project.keyFeatures.length > 0
+  const hasImages = project.images && project.images.length > 0
+
+  // Use loading="lazy" for all images except first one
+  const shouldLazyLoad = (project.order || 0) > 0
 
   return (
     <div className="space-y-3">
-      {/* Video Preview */}
+      {/* Image/Video Preview */}
       <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
-        {renderVideo(project.video)}
+        {hasImages && project.images && project.images[0] ? (
+          <img
+            src={project.images[0]}
+            alt={project.name}
+            width="1200"
+            height="675"
+            className="aspect-video w-full rounded-xl bg-zinc-100 object-contain dark:bg-zinc-900"
+            style={{
+              filter:
+                'grayscale(100%) sepia(20%) brightness(0.9) contrast(1.1)',
+            }}
+            loading={shouldLazyLoad ? 'lazy' : 'eager'}
+            fetchPriority={shouldLazyLoad ? undefined : 'high'}
+            decoding="async"
+          />
+        ) : (
+          renderVideo(project.video)
+        )}
       </div>
 
       {/* Project Info */}
@@ -58,7 +79,7 @@ export function ProjectCard({ project, renderVideo }: ProjectCardProps) {
         {/* Title and Links */}
         <div className="flex items-start justify-between gap-2">
           <a
-            className="font-base group relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"
+            className="group relative inline-block text-base font-medium text-zinc-900 dark:text-zinc-50"
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
@@ -100,12 +121,12 @@ export function ProjectCard({ project, renderVideo }: ProjectCardProps) {
         {/* Technologies */}
         {hasTechnologies && (
           <div className="flex flex-wrap gap-1.5 pt-1">
-            {project.technologies.slice(0, 5).map((tech) => (
+            {project.technologies!.slice(0, 5).map((tech) => (
               <TechBadge key={tech} label={tech} />
             ))}
-            {project.technologies.length > 5 && (
+            {project.technologies!.length > 5 && (
               <TechBadge
-                label={`+${project.technologies.length - 5} more`}
+                label={`+${project.technologies!.length - 5} more`}
                 variant="secondary"
               />
             )}
@@ -115,16 +136,16 @@ export function ProjectCard({ project, renderVideo }: ProjectCardProps) {
         {/* Key Features - Show first 2 */}
         {hasFeatures && (
           <div className="pt-1">
-            <ul className="space-y-0.5 text-xs text-zinc-600 dark:text-zinc-400">
-              {project.keyFeatures.slice(0, 2).map((feature, index) => (
+            <ul className="space-y-0.5 text-sm text-zinc-600 dark:text-zinc-400">
+              {project.keyFeatures!.slice(0, 2).map((feature, index) => (
                 <li key={index} className="flex items-start gap-1.5">
-                  <span className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-zinc-400 dark:bg-zinc-600"></span>
+                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-zinc-400 dark:bg-zinc-600"></span>
                   <span>{feature}</span>
                 </li>
               ))}
-              {project.keyFeatures.length > 2 && (
+              {project.keyFeatures!.length > 2 && (
                 <li className="text-zinc-500 dark:text-zinc-500">
-                  +{project.keyFeatures.length - 2} more features
+                  +{project.keyFeatures!.length - 2} more features
                 </li>
               )}
             </ul>

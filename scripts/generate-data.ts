@@ -14,6 +14,8 @@ import {
   SkillsGroupSchema,
   SocialLinkSchema,
   ProfileSchema,
+  CertificationSchema,
+  GitHubStatsSchema,
   validateData,
 } from '../content/schema/types'
 
@@ -44,72 +46,98 @@ function generateDataFile() {
 
   try {
     // Load and validate all content
-    const projectsData = readJSONDirectory(
-      path.join(CONTENT_DIR, 'projects')
-    )
+    const projectsData = readJSONDirectory(path.join(CONTENT_DIR, 'projects'))
     const projects = projectsData
       .map((data, index) =>
-        validateData(ProjectSchema, data, `projects[${index}]`)
+        validateData(ProjectSchema, data, `projects[${index}]`),
       )
       .sort((a, b) => (a.order || 0) - (b.order || 0))
 
     const experienceData = readJSONDirectory(
-      path.join(CONTENT_DIR, 'experience')
+      path.join(CONTENT_DIR, 'experience'),
     ).filter((data: any) => !data.school) // Exclude education
 
     const workExperience = experienceData
       .map((data, index) =>
-        validateData(WorkExperienceSchema, data, `experience[${index}]`)
+        validateData(WorkExperienceSchema, data, `experience[${index}]`),
       )
       .sort((a, b) => (a.order || 0) - (b.order || 0))
 
     const educationData = readJSONDirectory(
-      path.join(CONTENT_DIR, 'experience')
+      path.join(CONTENT_DIR, 'experience'),
     ).filter((data: any) => data.school) // Only education
 
     const education = educationData
       .map((data, index) =>
-        validateData(EducationSchema, data, `education[${index}]`)
+        validateData(EducationSchema, data, `education[${index}]`),
       )
       .sort((a, b) => (a.order || 0) - (b.order || 0))
 
     const devOpsSkillsData = readJSONFile(
-      path.join(CONTENT_DIR, 'skills', 'devops.json')
+      path.join(CONTENT_DIR, 'skills', 'devops.json'),
     )
     const devOpsGroup = validateData(
       SkillsGroupSchema,
       devOpsSkillsData,
-      'devops-skills'
+      'devops-skills',
     )
     const devOpsSkills = devOpsGroup.skills.sort(
-      (a, b) => (a.order || 0) - (b.order || 0)
+      (a, b) => (a.order || 0) - (b.order || 0),
     )
 
     const devSkillsData = readJSONFile(
-      path.join(CONTENT_DIR, 'skills', 'development.json')
+      path.join(CONTENT_DIR, 'skills', 'development.json'),
     )
     const devGroup = validateData(
       SkillsGroupSchema,
       devSkillsData,
-      'development-skills'
+      'development-skills',
     )
     const devSkills = devGroup.skills.sort(
-      (a, b) => (a.order || 0) - (b.order || 0)
+      (a, b) => (a.order || 0) - (b.order || 0),
     )
 
     const socialLinksData = readJSONFile(
-      path.join(CONTENT_DIR, 'profile', 'social.json')
+      path.join(CONTENT_DIR, 'profile', 'social.json'),
     )
     const socialLinks = (socialLinksData as any[])
       .map((data, index) =>
-        validateData(SocialLinkSchema, data, `social-links[${index}]`)
+        validateData(SocialLinkSchema, data, `social-links[${index}]`),
       )
       .sort((a, b) => (a.order || 0) - (b.order || 0))
 
     const profileData = readJSONFile(
-      path.join(CONTENT_DIR, 'profile', 'about.json')
+      path.join(CONTENT_DIR, 'profile', 'about.json'),
     )
     const profile = validateData(ProfileSchema, profileData, 'profile')
+
+    // Load certifications (optional - may not exist)
+    let certifications: any[] = []
+    const certificationsPath = path.join(CONTENT_DIR, 'certifications')
+    if (fs.existsSync(certificationsPath)) {
+      const certificationsData = readJSONDirectory(certificationsPath)
+      certifications = certificationsData
+        .map((data, index) =>
+          validateData(CertificationSchema, data, `certifications[${index}]`),
+        )
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+    }
+
+    // Load GitHub stats (optional - may not exist)
+    let githubStats: any = {}
+    const githubStatsPath = path.join(
+      CONTENT_DIR,
+      'profile',
+      'github-stats.json',
+    )
+    if (fs.existsSync(githubStatsPath)) {
+      const githubStatsData = readJSONFile(githubStatsPath)
+      githubStats = validateData(
+        GitHubStatsSchema,
+        githubStatsData,
+        'github-stats',
+      )
+    }
 
     // Generate TypeScript file
     const output = `/**
@@ -203,6 +231,43 @@ type SocialLink = {
   order?: number
 }
 
+type Certification = {
+  id: string
+  name: string
+  issuer: string
+  credentialUrl?: string
+  credentialId?: string
+  issueDate?: string
+  expirationDate?: string
+  description?: string
+  skills?: string[]
+  icon?: string
+  order?: number
+}
+
+type GitHubStats = {
+  stars?: number
+  repositories?: number
+  followers?: number
+  following?: number
+  contributions?: number
+  achievements?: string[]
+  topLanguages?: string[]
+}
+
+type Profile = {
+  name: string
+  displayName?: string
+  title: string
+  tagline?: string
+  email: string
+  phone?: string
+  location?: string
+  about: string
+  resumeUrl?: string
+  avatar?: string
+}
+
 // ============================================================================
 // DATA
 // ============================================================================
@@ -219,6 +284,12 @@ export const DEV_SKILLS: Skills[] = ${JSON.stringify(devSkills, null, 2)}
 
 export const SOCIAL_LINKS: SocialLink[] = ${JSON.stringify(socialLinks, null, 2)}
 
+export const CERTIFICATIONS: Certification[] = ${JSON.stringify(certifications, null, 2)}
+
+export const GITHUB_STATS: GitHubStats = ${JSON.stringify(githubStats, null, 2)}
+
+export const PROFILE: Profile = ${JSON.stringify(profile, null, 2)}
+
 export const EMAIL = ${JSON.stringify(profile.email)}
 `
 
@@ -232,6 +303,10 @@ export const EMAIL = ${JSON.stringify(profile.email)}
     console.log(`   - ${devOpsSkills.length} DevOps skills`)
     console.log(`   - ${devSkills.length} Development skills`)
     console.log(`   - ${socialLinks.length} social links`)
+    console.log(`   - ${certifications.length} certifications`)
+    if (githubStats && Object.keys(githubStats).length > 0) {
+      console.log('   - GitHub stats included')
+    }
   } catch (error) {
     console.error('❌ Error generating data file:', error)
     process.exit(1)

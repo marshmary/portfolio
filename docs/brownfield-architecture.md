@@ -10,15 +10,16 @@ This document captures the **CURRENT STATE** of the Personal Portfolio website c
 
 ### Change Log
 
-| Date | Version | Description | Author |
-|------|---------|-------------|--------|
-| 2025-11-07 | 1.0 | Initial brownfield analysis | Claude Code |
+| Date       | Version | Description                 | Author      |
+| ---------- | ------- | --------------------------- | ----------- |
+| 2025-11-07 | 1.0     | Initial brownfield analysis | Claude Code |
 
 ## Quick Reference - Key Files and Entry Points
 
 ### Critical Files for Understanding the System
 
 **Core Application**:
+
 - **Main Entry**: `app/page.tsx` - Main portfolio page component
 - **Root Layout**: `app/layout.tsx` - App-wide layout, theme provider, fonts
 - **Data Source**: `app/data.ts` - **ALL portfolio content lives here** (projects, experience, skills)
@@ -26,21 +27,25 @@ This document captures the **CURRENT STATE** of the Personal Portfolio website c
 - **Configuration**: `next.config.mjs` - Next.js config with MDX support
 
 **Components**:
+
 - **UI Components**: `components/ui/*` - Reusable animated components from Motion-Primitives
 - **Header**: `app/header.tsx` - Name and title display
 - **Footer**: `app/footer.tsx` - Footer component
 - **Navigation**: `components/ui/nav-bar.tsx` - Navigation bar with theme toggle
 
 **Blog**:
+
 - **Blog Layout**: `app/blog/layout.tsx` - Blog post layout with scroll progress
 - **Blog Posts**: `app/blog/*/page.mdx` - Individual blog posts in MDX format
 
 **Utilities**:
+
 - **Utils**: `lib/utils.ts` - Utility function (cn for className merging)
 - **Constants**: `lib/constants.ts` - Application constants
 - **Hooks**: `hooks/useClickOutside.tsx` - Custom React hook
 
 **Configuration Files**:
+
 - **TypeScript**: `tsconfig.json` - TypeScript configuration with path aliases
 - **Netlify**: `netlify.toml` - Deployment configuration
 - **Package**: `package.json` - Dependencies and scripts
@@ -50,17 +55,20 @@ This document captures the **CURRENT STATE** of the Personal Portfolio website c
 Based on the PRD, these files/modules will be affected:
 
 **High Impact**:
+
 - `app/data.ts` → Will be refactored into structured content directory
 - `app/page.tsx` → Will need updates to display enhanced content
 - **New**: `content/` directory structure (to be created)
 - **New**: Enhanced TypeScript types for content schemas
 
 **Medium Impact**:
+
 - `components/ui/*` → May need new components for detailed views/modals
 - `app/layout.tsx` → Possible metadata updates
 - Blog components → Better integration with main portfolio
 
 **Low Impact**:
+
 - `app/header.tsx`, `app/footer.tsx` → Minimal changes
 - Styling files → New classes for enhanced content display
 
@@ -71,6 +79,7 @@ Based on the PRD, these files/modules will be affected:
 This is a **modern single-page application** (SPA) portfolio built with Next.js 15's App Router architecture. The application uses server and client components appropriately, with animations handled client-side via Motion library. Content is currently **hardcoded in TypeScript**, which is the primary constraint for easy updates.
 
 **Key Characteristics**:
+
 - Single-page layout with smooth scrolling sections
 - Client-side animations using Motion library
 - Static content with no backend/database
@@ -79,22 +88,22 @@ This is a **modern single-page application** (SPA) portfolio built with Next.js 
 
 ### Actual Tech Stack
 
-| Category | Technology | Version | Notes |
-|----------|------------|---------|-------|
-| **Runtime** | Node.js | ^20 | Required for Next.js 15 |
-| **Framework** | Next.js | 15.1.1 | Uses App Router (not Pages Router) |
-| **UI Library** | React | 19.0.0 | Latest version with new features |
-| **Styling** | Tailwind CSS | 4.0.0 | Using new v4 features, PostCSS plugin |
-| **Animation** | Motion | 11.15.0 | Modern animation library |
-| **Motion Components** | Motion-primitives | Custom components | Spotlight, Magnetic, MorphingDialog, etc. |
-| **Content** | MDX | 3.0.1 | For blog posts only |
-| **Fonts** | Geist, Geist Mono | Latest | Google Fonts via next/font |
-| **Theme** | next-themes | 0.4.4 | Dark/light mode switching |
-| **Icons** | lucide-react | 0.468.0 | Icon library |
-| **Code Highlighting** | sugar-high | 0.9.3 | Syntax highlighting for code blocks |
-| **Utilities** | clsx, tailwind-merge | Latest | ClassName utilities |
-| **Deployment** | Netlify | - | With @netlify/plugin-nextjs |
-| **Package Manager** | npm | - | Standard npm |
+| Category              | Technology           | Version           | Notes                                     |
+| --------------------- | -------------------- | ----------------- | ----------------------------------------- |
+| **Runtime**           | Node.js              | ^20               | Required for Next.js 15                   |
+| **Framework**         | Next.js              | 15.1.1            | Uses App Router (not Pages Router)        |
+| **UI Library**        | React                | 19.0.0            | Latest version with new features          |
+| **Styling**           | Tailwind CSS         | 4.0.0             | Using new v4 features, PostCSS plugin     |
+| **Animation**         | Motion               | 11.15.0           | Modern animation library                  |
+| **Motion Components** | Motion-primitives    | Custom components | Spotlight, Magnetic, MorphingDialog, etc. |
+| **Content**           | MDX                  | 3.0.1             | For blog posts only                       |
+| **Fonts**             | Geist, Geist Mono    | Latest            | Google Fonts via next/font                |
+| **Theme**             | next-themes          | 0.4.4             | Dark/light mode switching                 |
+| **Icons**             | lucide-react         | 0.468.0           | Icon library                              |
+| **Code Highlighting** | sugar-high           | 0.9.3             | Syntax highlighting for code blocks       |
+| **Utilities**         | clsx, tailwind-merge | Latest            | ClassName utilities                       |
+| **Deployment**        | Netlify              | -                 | With @netlify/plugin-nextjs               |
+| **Package Manager**   | npm                  | -                 | Standard npm                              |
 
 ### Repository Structure Reality Check
 
@@ -171,9 +180,11 @@ portfolio/
 ### Key Modules and Their Purpose
 
 #### 1. **Content Module** (`app/data.ts`)
+
 **⚠️ CRITICAL FOR ENHANCEMENTS**
 
 This file contains ALL portfolio content as TypeScript constants:
+
 - `PROJECTS: Project[]` - Array of 4 projects
 - `WORK_EXPERIENCE: WorkExperience[]` - Array of 3 work positions
 - `EDUCATIONS: Education[]` - Array of 1 education entry
@@ -183,6 +194,7 @@ This file contains ALL portfolio content as TypeScript constants:
 - `EMAIL: string` - Contact email
 
 **Current Limitations**:
+
 - Must modify code to update content
 - No validation or schema enforcement
 - Limited fields for each content type
@@ -191,6 +203,7 @@ This file contains ALL portfolio content as TypeScript constants:
 **Enhancement Plan**: This will be refactored into a `content/` directory structure with JSON/YAML files.
 
 #### 2. **Main Page Component** (`app/page.tsx`)
+
 **⚠️ WILL REQUIRE UPDATES**
 
 - 346 lines of client-side React code
@@ -223,12 +236,14 @@ This file contains ALL portfolio content as TypeScript constants:
 - Sets viewport configuration
 
 **Notable**:
+
 - Metadata base URL: `https://portfolio.phutran.dev/`
 - Theme stored in localStorage with key "theme"
 
 #### 4. **UI Components** (`components/ui/*`)
 
 All components are from Motion-Primitives library, providing:
+
 - **animated-background.tsx** - Animated background effect on hover
 - **magnetic.tsx** - Magnetic hover effect
 - **morphing-dialog.tsx** - Modal with morphing animation
@@ -252,6 +267,7 @@ All components are from Motion-Primitives library, providing:
   - Prose styling for typography
 
 **Current State**:
+
 - 2 example blog posts
 - Not integrated with main portfolio page
 - Accessible via `/blog/[slug]` routes
@@ -265,25 +281,30 @@ All components are from Motion-Primitives library, providing:
 - Border color compatibility layer for Tailwind v4
 
 **Custom Variables**:
+
 ```css
 --sh-class, --sh-sign, --sh-string, --sh-keyword, --sh-comment, --sh-jsxliterals, --sh-property, --sh-entity
 ```
+
 These are for sugar-high syntax highlighting.
 
 #### 7. **Configuration**
 
 **TypeScript (`tsconfig.json`)**:
+
 - Target: ES2017
 - Module: esnext with bundler resolution
 - Path alias: `@/*` maps to root
 - Strict mode enabled
 
 **Next.js (`next.config.mjs`)**:
+
 - React strict mode enabled
 - Page extensions: `['js', 'jsx', 'ts', 'tsx', 'md', 'mdx']`
 - MDX support via `@next/mdx`
 
 **Netlify (`netlify.toml`)**:
+
 - Build command: `next build`
 - Publish directory: `.next`
 - Uses `@netlify/plugin-nextjs` plugin
@@ -358,12 +379,14 @@ type SocialLink = {
 **No External APIs**: This is a static portfolio with no backend API.
 
 **Internal Data Flow**:
+
 1. Data defined in `app/data.ts`
 2. Imported into `app/page.tsx`
 3. Mapped to UI components
 4. Rendered on page
 
 **For Blog Posts**:
+
 - MDX files are parsed by Next.js MDX plugin
 - Metadata extracted from file structure
 - Rendered with blog layout
@@ -371,7 +394,7 @@ type SocialLink = {
 ### Routing Structure
 
 - `/` - Main portfolio page (app/page.tsx)
-- `/blog/[slug]` - Individual blog posts (app/blog/*/page.mdx)
+- `/blog/[slug]` - Individual blog posts (app/blog/\*/page.mdx)
 - Automatic routes generated by App Router
 
 ## Technical Debt and Known Issues
@@ -379,30 +402,35 @@ type SocialLink = {
 ### Current Technical Debt
 
 1. **⚠️ CRITICAL: Content Management**
+
    - **Location**: `app/data.ts`
    - **Issue**: All content hardcoded in TypeScript
    - **Impact**: Requires code changes and deployment for content updates
    - **Plan**: Refactor to file-based content system (see PRD)
 
 2. **Limited Type Safety**
+
    - **Location**: `app/data.ts`
    - **Issue**: No runtime validation, just TypeScript compile-time checks
    - **Impact**: Could introduce data errors
    - **Recommendation**: Add Zod or similar for runtime validation
 
 3. **Missing Content Fields**
+
    - **Location**: All data types in `app/data.ts`
    - **Issue**: Types lack fields for detailed information (see PRD for details)
    - **Impact**: Cannot showcase full project/experience details
    - **Plan**: Extend types with additional fields
 
 4. **Incomplete Social Links**
+
    - **Location**: `app/data.ts:183`
    - **Issue**: LinkedIn link is empty string
    - **Impact**: Non-functional social link
    - **Fix**: Add LinkedIn URL or remove from display
 
 5. **Blog Integration**
+
    - **Location**: Blog system and main page are disconnected
    - **Issue**: Blog posts not showcased on main portfolio page
    - **Impact**: Visitors may not discover blog content
@@ -417,24 +445,28 @@ type SocialLink = {
 ### Workarounds and Gotchas
 
 1. **Client-Side Animations**
+
    - **Pattern**: Main page uses `'use client'` directive
    - **Reason**: Motion animations require client-side React
    - **Implication**: Page is not server-rendered, entire component bundle sent to client
    - **Note**: This is acceptable for portfolio, but be aware for performance
 
 2. **Tailwind v4 Border Colors**
+
    - **Location**: `app/globals.css:13-21`
    - **Reason**: Tailwind v4 changed default border color to `currentColor`
    - **Workaround**: Compatibility layer sets border color globally
    - **Note**: May need updates when applying border utilities
 
 3. **Theme Provider Hydration**
+
    - **Location**: `app/layout.tsx:43`
    - **Pattern**: `suppressHydrationWarning` on `<html>` tag
    - **Reason**: Theme is applied via JavaScript after initial render
    - **Note**: Required for next-themes to work without hydration errors
 
 4. **Font Loading**
+
    - **Pattern**: Geist fonts loaded via next/font with CSS variables
    - **Variables**: `--font-geist`, `--font-geist-mono`
    - **Usage**: Applied to body with `className={...}`
@@ -450,29 +482,32 @@ type SocialLink = {
 
 ### External Services
 
-| Service | Purpose | Integration Type | Key Files |
-|---------|---------|------------------|-----------|
-| Google Fonts | Font loading | Next.js `next/font` | `app/layout.tsx` |
-| Netlify | Hosting & deployment | Static site hosting | `netlify.toml` |
-| Cloudinary | Video hosting | External CDN URLs | `app/data.ts` (video URLs) |
-| External websites | Project demos | Direct links | `app/data.ts` (link fields) |
+| Service           | Purpose              | Integration Type    | Key Files                   |
+| ----------------- | -------------------- | ------------------- | --------------------------- |
+| Google Fonts      | Font loading         | Next.js `next/font` | `app/layout.tsx`            |
+| Netlify           | Hosting & deployment | Static site hosting | `netlify.toml`              |
+| Cloudinary        | Video hosting        | External CDN URLs   | `app/data.ts` (video URLs)  |
+| External websites | Project demos        | Direct links        | `app/data.ts` (link fields) |
 
 **Note**: No authentication, no databases, no API integrations currently.
 
 ### Internal Integration Points
 
 1. **Component to Data Binding**
+
    - `app/page.tsx` imports from `app/data.ts`
    - Data mapped to components via `.map()` calls
    - Props passed down to child components
 
 2. **Theme System**
+
    - `next-themes` ThemeProvider in `app/layout.tsx`
    - Theme toggle in `components/ui/nav-bar.tsx`
    - Dark mode styles via Tailwind dark: variant
    - Stored in localStorage with key "theme"
 
 3. **Navigation**
+
    - Smooth scrolling to sections via anchor links
    - Navigation bar in `components/ui/nav-bar.tsx`
    - Sections have IDs: `#about`, `#projects`, `#contact`
@@ -488,10 +523,12 @@ type SocialLink = {
 ### Local Development Setup
 
 **Prerequisites**:
+
 - Node.js 20 or higher
 - npm (comes with Node.js)
 
 **Setup Steps**:
+
 ```bash
 # 1. Install dependencies
 npm install
@@ -504,17 +541,20 @@ npm run dev
 ```
 
 **Development Server**:
+
 - Port: 3000 (default)
 - Hot reload enabled
 - Fast Refresh for instant feedback
 
 **Known Setup Issues**:
+
 - Ensure Node.js version >= 20 (required for Next.js 15)
 - If port 3000 is in use, Next.js will prompt for alternative port
 
 ### Build and Deployment Process
 
 **Build Commands** (from `package.json`):
+
 ```bash
 npm run dev      # Start development server
 npm run build    # Production build
@@ -523,6 +563,7 @@ npm run lint     # Run ESLint
 ```
 
 **Build Process**:
+
 1. Next.js compiles TypeScript
 2. Tailwind CSS processes styles
 3. MDX files compiled to React components
@@ -530,6 +571,7 @@ npm run lint     # Run ESLint
 5. Output in `.next/` directory
 
 **Deployment**:
+
 - **Platform**: Netlify
 - **Configuration**: `netlify.toml`
 - **Build Command**: `next build`
@@ -538,6 +580,7 @@ npm run lint     # Run ESLint
 - **URL**: https://portfolio.phutran.dev/
 
 **Deployment Trigger**:
+
 - Automatic on git push to main branch
 - Manual via Netlify dashboard
 
@@ -546,6 +589,7 @@ npm run lint     # Run ESLint
 ### Version Control
 
 **Git Status** (as of session start):
+
 - Current branch: `main`
 - Recent commits:
   - `fa1cacb` - fix: try changing netlify config
@@ -553,6 +597,7 @@ npm run lint     # Run ESLint
   - `5613c71` - feat: portfolio v2
 
 **Untracked Directories**:
+
 - `.bmad-core/`
 - `.bmad-infrastructure-devops/`
 - `.claude/`
@@ -572,6 +617,7 @@ npm run lint     # Run ESLint
 ### Testing Approach
 
 Currently, testing is done manually:
+
 - Visual inspection during development
 - Browser testing (Chrome, Firefox, Safari)
 - Mobile responsiveness testing
@@ -581,6 +627,7 @@ Currently, testing is done manually:
 ### Recommendations for Future
 
 When implementing enhancements:
+
 1. **Add Type Validation**: Use Zod for content schema validation
 2. **Visual Regression Testing**: Consider tools like Playwright for E2E
 3. **Accessibility Testing**: Use axe-core or similar for a11y checks
@@ -591,6 +638,7 @@ When implementing enhancements:
 ### Animation Philosophy
 
 The portfolio uses a **consistent animation language** via Motion library:
+
 - **Stagger animations** for sequential reveals
 - **Spring physics** with `bounce: 0` for smooth, natural motion
 - **Fade + blur** entrance effects
@@ -600,18 +648,19 @@ The portfolio uses a **consistent animation language** via Motion library:
 ### Common Animation Patterns
 
 **1. Section Entrance Animation** (`app/page.tsx:25-42`)
+
 ```typescript
 const VARIANTS_CONTAINER = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
-  }
+    transition: { staggerChildren: 0.15 },
+  },
 }
 
 const VARIANTS_SECTION = {
   hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' }
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
 }
 
 const TRANSITION_SECTION = { duration: 0.3 }
@@ -620,28 +669,33 @@ const TRANSITION_SECTION = { duration: 0.3 }
 **Usage**: Applied to `motion.main` and `motion.section` elements.
 
 **2. Text Effects** (`app/header.tsx`)
+
 - Uses `TextEffect` component with `preset="fade"` and `per="char"`
 - Animates each character individually
 - Delay: 0.5s
 
 **3. Hover Effects**
+
 - **Spotlight**: Light follows cursor on work/education cards
 - **Magnetic**: Social links have magnetic hover attraction
 - **Animated Background**: Skills sections have animated hover states
 
 **4. Modal/Dialog**
+
 - **MorphingDialog**: Smooth scale + position morphing
 - Spring transition with `bounce: 0, duration: 0.3`
 
 ### When Adding New Components
 
 **✅ DO**:
+
 - Use spring animations with `bounce: 0`
 - Follow stagger pattern for lists
 - Use consistent fade + blur entrance
 - Test animation performance
 
 **❌ DON'T**:
+
 - Mix different animation libraries
 - Use linear easing (breaks spring feel)
 - Overload page with too many animations
@@ -654,6 +708,7 @@ Based on the PRD, here's guidance for implementing enhancements:
 ### Phase 1 - Content Restructuring
 
 **Files to Create**:
+
 ```
 content/
 ├── projects/
@@ -676,10 +731,12 @@ content/
 ```
 
 **Files to Modify**:
+
 - `app/data.ts` → Refactor to read from content files
 - TypeScript types → Extend with new fields (see PRD)
 
 **Implementation Approach**:
+
 1. Create content directory structure
 2. Define enhanced TypeScript types
 3. Create utility functions to read JSON files
@@ -690,17 +747,20 @@ content/
 ### Phase 2 - Enhanced UI Components
 
 **New Components to Create**:
+
 - `components/ui/project-detail-modal.tsx` - Detailed project view
 - `components/ui/experience-card.tsx` - Enhanced experience card with expandable details
 - `components/ui/skill-badge.tsx` - Skill badge with proficiency indicator
 - `components/ui/section-heading.tsx` - Consistent section headings
 
 **Existing Components to Extend**:
+
 - Update project cards in `app/page.tsx` to show more fields
 - Enhance work experience cards with expandable sections
 - Add filtering/search to skills sections
 
 **Design Consistency**:
+
 - Follow existing color scheme (zinc palette)
 - Use existing animation patterns
 - Maintain responsive grid layouts
@@ -709,11 +769,13 @@ content/
 ### Phase 3 - Content Update Workflow
 
 **Documentation to Create**:
+
 - `docs/content-guide.md` - Guide for updating content
 - `content/README.md` - Content structure explanation
 - JSON schema files for validation
 
 **Tooling to Consider**:
+
 - JSON schema validator script
 - Content linting/validation in CI
 - Template generator for new content entries
@@ -721,42 +783,40 @@ content/
 ### Files That Will Need Modification Summary
 
 **🔴 High Priority** (Significant changes required):
+
 1. `app/data.ts` - Complete refactor to load from content files
 2. `app/page.tsx` - Update to handle new data structure and display additional fields
 3. **New** `content/` directory - Create entire content structure
 4. **New** `lib/content-loader.ts` - Utility to load and validate content
 
-**🟡 Medium Priority** (Moderate updates):
-5. `components/ui/*` - Extend or create new components for detailed views
-6. `app/layout.tsx` - Update metadata if adding new sections
-7. `app/globals.css` - Add new utility classes if needed
-8. `tsconfig.json` - May need to include content directory
+**🟡 Medium Priority** (Moderate updates): 5. `components/ui/*` - Extend or create new components for detailed views 6. `app/layout.tsx` - Update metadata if adding new sections 7. `app/globals.css` - Add new utility classes if needed 8. `tsconfig.json` - May need to include content directory
 
-**🟢 Low Priority** (Minor or no changes):
-9. Configuration files - Minimal changes expected
-10. `app/header.tsx`, `app/footer.tsx` - Likely no changes needed
-11. Blog system - Minor integration updates
+**🟢 Low Priority** (Minor or no changes): 9. Configuration files - Minimal changes expected 10. `app/header.tsx`, `app/footer.tsx` - Likely no changes needed 11. Blog system - Minor integration updates
 
 ### Integration Considerations
 
 **When implementing enhancements**:
 
 1. **Preserve Animation Patterns**
+
    - Use existing animation variants
    - Follow stagger pattern for new lists
    - Test animation performance with more content
 
 2. **Maintain Theme Support**
+
    - All new components must support dark mode
    - Use Tailwind dark: variant consistently
    - Test in both themes
 
 3. **Keep Responsive Design**
+
    - Test all breakpoints (sm, md, lg)
    - Maintain mobile-first approach
    - Use Tailwind responsive utilities
 
 4. **Follow Component Patterns**
+
    - Keep client/server component boundaries clear
    - Use 'use client' only when necessary (animations, interactions)
    - Extract reusable logic into hooks
@@ -771,6 +831,7 @@ content/
 ### Current Accessibility Features
 
 ✅ **Good Practices**:
+
 - Semantic HTML structure
 - Proper heading hierarchy (h1, h2, h3, h4)
 - Keyboard accessible navigation
@@ -779,6 +840,7 @@ content/
 - Responsive design for various viewport sizes
 
 ⚠️ **Areas to Verify**:
+
 - Alt text for images/videos (currently using videos which may need captions)
 - Focus indicators on interactive elements
 - Screen reader testing needed
@@ -787,6 +849,7 @@ content/
 ### Enhancement Accessibility Requirements
 
 When implementing enhancements:
+
 1. **Expandable Content**: Use proper ARIA attributes (aria-expanded, aria-controls)
 2. **Modals/Dialogs**: Implement focus trapping and Escape key handling
 3. **Filtering**: Announce filter results to screen readers
@@ -797,12 +860,14 @@ When implementing enhancements:
 ### Current Performance Characteristics
 
 **Good**:
+
 - Next.js optimizations (code splitting, image optimization)
 - Font subsetting and optimization via next/font
 - Static generation where possible
 - Minimal JavaScript bundle for content-focused page
 
 **Watch Out For**:
+
 - Video files hosted on Cloudinary (ensure proper compression)
 - Motion animations (generally performant but test with more content)
 - Client-side rendering of entire main page (consider partial SSR in future)
@@ -810,11 +875,13 @@ When implementing enhancements:
 ### Enhancement Performance Guidelines
 
 1. **Content Loading**:
+
    - Consider lazy loading for below-fold content
    - Implement pagination or infinite scroll if content grows significantly
    - Cache content in memory during build
 
 2. **Images/Media**:
+
    - Use Next.js Image component for optimization
    - Implement lazy loading for images
    - Consider video thumbnails instead of autoplay for many projects
@@ -848,11 +915,13 @@ npm install                  # Reinstall
 ### Debugging and Troubleshooting
 
 **Logs**:
+
 - Development: Console in browser and terminal
 - Build: Terminal output during `npm run build`
 - Production: Netlify function logs (if applicable)
 
 **Debug Mode**:
+
 - React DevTools: Inspect component tree
 - Network tab: Check resource loading
 - Lighthouse: Performance audit
@@ -860,16 +929,19 @@ npm install                  # Reinstall
 **Common Issues**:
 
 1. **Build Fails**:
+
    - Check TypeScript errors: `npx tsc --noEmit`
    - Check ESLint: `npm run lint`
    - Clear `.next`: `rm -rf .next && npm run build`
 
 2. **Animations Not Working**:
+
    - Verify component has `'use client'` directive
    - Check Motion library is imported correctly
    - Verify no CSS conflicts
 
 3. **Theme Not Switching**:
+
    - Check localStorage (key: "theme")
    - Verify ThemeProvider is wrapping app
    - Check dark: variant in Tailwind classes
@@ -916,18 +988,21 @@ Based on the PRD, the recommended implementation order:
 
 1. ✅ **Documentation Complete** (This document)
 2. 🔄 **Phase 1**: Content restructuring (Week 1)
+
    - Create content directory structure
    - Define enhanced TypeScript types and Zod schemas
    - Create content loader utilities
    - Migrate existing data to new format
 
 3. 🔄 **Phase 2**: UI enhancements (Weeks 1-2)
+
    - Extend project cards with detailed views
    - Enhance work experience timeline
    - Add skill proficiency indicators
    - Implement filtering/categorization
 
 4. 🔄 **Phase 3**: Integration and testing (Weeks 2-3)
+
    - Test all animations with enhanced content
    - Verify responsive design
    - Accessibility audit

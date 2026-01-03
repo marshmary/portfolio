@@ -30,10 +30,14 @@ interface WorkExperience {
 
 interface ExperienceCardProps {
   experience: WorkExperience
+  defaultOpen?: boolean
 }
 
-export function ExperienceCard({ experience }: ExperienceCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
+export function ExperienceCard({
+  experience,
+  defaultOpen = false,
+}: ExperienceCardProps) {
+  const [isExpanded, setIsExpanded] = useState(defaultOpen)
 
   const hasResponsibilities =
     experience.responsibilities && experience.responsibilities.length > 0
@@ -52,7 +56,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
   return (
     <div className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30">
       <Spotlight
-        className="blur-2xl from-zinc-900 via-zinc-800 to-zinc-700 dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
+        className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
         size={64}
       />
       <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
@@ -143,7 +147,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
                     <ul className="space-y-1.5 text-sm text-zinc-600 dark:text-zinc-400">
                       {achievements.map((achievement, index) => (
                         <li key={index} className="flex items-start gap-2">
-                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-blue-500 dark:bg-blue-400"></span>
+                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-600 dark:bg-green-500"></span>
                           <span>{achievement}</span>
                         </li>
                       ))}

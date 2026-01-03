@@ -1,6 +1,10 @@
 {
-  "name": "Phu Tran",
+  "name": "Trần Thiện Phú",
+  "displayName": "Phu Tran",
   "title": "DevOps Engineer",
-  "email": "phutt2201@gmail.com",
+  "tagline": "Automate everything. Monitor everything. Improve everything.",
+  "email": "contact@phutran.dev",
+  "phone": "(+84) 763 883 037",
+  "location": "Can Tho City, Vietnam",
   "about": "A passionate DevOps engineer with expertise in automating infrastructure, optimizing deployment pipelines, and enhancing system reliability. Skilled in cloud platforms, CI/CD tools, and containerization, I bridge the gap between development and operations to deliver scalable, efficient, and secure software solutions."
 }

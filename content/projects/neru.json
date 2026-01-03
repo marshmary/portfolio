@@ -13,5 +13,6 @@
     "Gallery of artwork"
   ],
   "order": 3,
-  "featured": false
+  "featured": false,
+  "images": ["/images/projects/neru.webp"]
 }

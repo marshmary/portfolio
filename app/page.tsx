@@ -22,6 +22,8 @@ import {
   DEV_SKILLS,
   EMAIL,
   SOCIAL_LINKS,
+  CERTIFICATIONS,
+  PROFILE,
 } from './data'
 
 const VARIANTS_CONTAINER = {
@@ -139,10 +141,76 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <div className="flex-1" id='about'>
-          <p className="text-zinc-600 dark:text-zinc-400">
-            A passionate DevOps engineer with expertise in automating infrastructure, optimizing deployment pipelines, and enhancing system reliability. Skilled in cloud platforms, CI/CD tools, and containerization, I bridge the gap between development and operations to deliver scalable, efficient, and secure software solutions.
-          </p>
+        <div className="flex-1" id="about">
+          <div className="space-y-4">
+            {/* Name and Role */}
+            <div>
+              <h1 className="text-3xl font-medium text-black dark:text-white">
+                {PROFILE.displayName || PROFILE.name}
+              </h1>
+              <p className="text-base text-zinc-600 dark:text-zinc-500">
+                {PROFILE.title}
+              </p>
+            </div>
+
+            {/* Tagline */}
+            {PROFILE.tagline && (
+              <p className="text-sm font-medium text-zinc-500 italic dark:text-zinc-500">
+                &ldquo;{PROFILE.tagline}&rdquo;
+              </p>
+            )}
+
+            {/* About Text */}
+            <p className="text-base text-zinc-600 dark:text-zinc-400">
+              {PROFILE.about}
+            </p>
+
+            {/* Location and Phone */}
+            <div className="flex flex-wrap items-center gap-4 text-base text-zinc-500 dark:text-zinc-400">
+              {PROFILE.location && (
+                <span className="flex items-center gap-1">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  {PROFILE.location}
+                </span>
+              )}
+              {PROFILE.phone && (
+                <span className="flex items-center gap-1">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                  {PROFILE.phone}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </motion.section>
 
@@ -150,10 +218,16 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-lg font-medium" >Work Experiences</h3>
+        <h3 className="mb-5 text-xl font-medium" id="work">
+          Work Experiences
+        </h3>
         <div className="flex flex-col space-y-2">
-          {WORK_EXPERIENCE.map((job) => (
-            <ExperienceCard key={job.id} experience={job} />
+          {WORK_EXPERIENCE.map((job, index) => (
+            <ExperienceCard
+              key={job.id}
+              experience={job}
+              defaultOpen={index === 0}
+            />
           ))}
         </div>
       </motion.section>
@@ -162,7 +236,55 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-lg font-medium">Education</h3>
+        <h3 className="mb-3 text-xl font-medium" id="skills">
+          Cloud Native DevOps Skills
+        </h3>
+        <div className="flex flex-col space-y-0">
+          <AnimatedBackground
+            enableHover
+            className="h-full w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/80"
+            transition={{
+              type: 'spring',
+              bounce: 0,
+              duration: 0.2,
+            }}
+          >
+            {DEVOPS_SKILLS.map((skill) => (
+              <SkillCard key={skill.uid} skill={skill} data-id={skill.uid} />
+            ))}
+          </AnimatedBackground>
+        </div>
+      </motion.section>
+
+      <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+      >
+        <h3 className="mb-3 text-xl font-medium">Development Skills</h3>
+        <div className="flex flex-col space-y-0">
+          <AnimatedBackground
+            enableHover
+            className="h-full w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/80"
+            transition={{
+              type: 'spring',
+              bounce: 0,
+              duration: 0.2,
+            }}
+          >
+            {DEV_SKILLS.map((skill) => (
+              <SkillCard key={skill.uid} skill={skill} data-id={skill.uid} />
+            ))}
+          </AnimatedBackground>
+        </div>
+      </motion.section>
+
+      <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+      >
+        <h3 className="mb-5 text-xl font-medium" id="education">
+          Education
+        </h3>
         <div className="flex flex-col space-y-2">
           {EDUCATIONS.map((school) => (
             <a
@@ -196,55 +318,78 @@ export default function Personal() {
         </div>
       </motion.section>
 
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
-      >
-        <h3 className="mb-3 text-lg font-medium">Cloud Native DevOps Skills</h3>
-        <div className="flex flex-col space-y-0">
-          <AnimatedBackground
-            enableHover
-            className="h-full w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/80"
-            transition={{
-              type: 'spring',
-              bounce: 0,
-              duration: 0.2,
-            }}
-          >
-            {DEVOPS_SKILLS.map((skill) => (
-              <SkillCard key={skill.uid} skill={skill} data-id={skill.uid} />
+      {CERTIFICATIONS.length > 0 && (
+        <motion.section
+          variants={VARIANTS_SECTION}
+          transition={TRANSITION_SECTION}
+        >
+          <h3 className="mb-5 text-xl font-medium" id="certifications">
+            Certifications
+          </h3>
+          <div className="flex flex-col space-y-2">
+            {CERTIFICATIONS.map((cert) => (
+              <div
+                key={cert.id}
+                className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30"
+              >
+                <Spotlight
+                  className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
+                  size={64}
+                />
+                <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
+                  <div className="flex w-full flex-row justify-between">
+                    <div className="flex-1">
+                      <h4 className="font-semibold dark:text-zinc-100">
+                        {cert.name}
+                      </h4>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                        {cert.issuer}
+                      </p>
+                      {cert.description && (
+                        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                          {cert.description}
+                        </p>
+                      )}
+                      {cert.skills && cert.skills.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1">
+                          {cert.skills.map((skill) => (
+                            <span
+                              key={skill}
+                              className="inline-flex items-center rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="ml-4 flex flex-col items-end justify-between">
+                      {cert.icon && (
+                        <span className="text-2xl font-bold text-zinc-400 dark:text-zinc-600">
+                          {cert.icon === 'AWS' && '☁️'}
+                        </span>
+                      )}
+                      {cert.issueDate && (
+                        <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                          {cert.issueDate}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
-          </AnimatedBackground>
-        </div>
-      </motion.section>
+          </div>
+        </motion.section>
+      )}
 
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-3 text-lg font-medium">Development Skills</h3>
-        <div className="flex flex-col space-y-0">
-          <AnimatedBackground
-            enableHover
-            className="h-full w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/80"
-            transition={{
-              type: 'spring',
-              bounce: 0,
-              duration: 0.2,
-            }}
-          >
-            {DEV_SKILLS.map((skill) => (
-              <SkillCard key={skill.uid} skill={skill} data-id={skill.uid} />
-            ))}
-          </AnimatedBackground>
-        </div>
-      </motion.section>
-
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
-      >
-        <h3 className="mb-5 text-lg font-medium" id='projects'>Projects</h3>
+        <h3 className="mb-5 text-xl font-medium" id="projects">
+          Projects
+        </h3>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {PROJECTS.map((project) => (
             <ProjectCard
@@ -260,12 +405,26 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-lg font-medium" id='contact'>Connect</h3>
-        <p className="mb-5 text-zinc-600 dark:text-zinc-400">
-          Feel free to contact me at {' '}
+        <h3 className="mb-5 text-xl font-medium" id="contact">
+          Connect
+        </h3>
+        <p className="mb-5 text-base text-zinc-600 dark:text-zinc-400">
+          Feel free to contact me at{' '}
           <a className="underline dark:text-zinc-300" href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>
+          {PROFILE.phone && (
+            <>
+              {' '}
+              or call{' '}
+              <a
+                className="underline dark:text-zinc-300"
+                href={`tel:${PROFILE.phone.replace(/\s/g, '')}`}
+              >
+                {PROFILE.phone}
+              </a>
+            </>
+          )}
         </p>
         <div className="flex items-center justify-start space-x-3">
           {SOCIAL_LINKS.map((link) => (

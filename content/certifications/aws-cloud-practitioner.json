@@ -1,0 +1,12 @@
+{
+  "id": "aws-cloud-practitioner",
+  "name": "AWS Certified Cloud Practitioner",
+  "issuer": "Amazon Web Services",
+  "credentialUrl": "https://www.credly.com/badges/9313fc7f-d47c-45a9-a564-a89a4001f5a3/public_url",
+  "credentialId": "AWS-CP-123456",
+  "issueDate": "2023",
+  "description": "Foundational understanding of AWS Cloud concepts, security, and architecture.",
+  "skills": ["AWS Cloud", "Cloud Computing", "Security", "Architecture"],
+  "icon": "AWS",
+  "order": 0
+}

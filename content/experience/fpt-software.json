@@ -17,11 +17,6 @@
     "Developed strong foundation in programming and software design",
     "Successfully completed all assigned projects"
   ],
-  "technologies": [
-    "C#",
-    ".NET",
-    "SQL Server",
-    "Git"
-  ],
+  "technologies": ["C#", ".NET", "SQL Server", "Git"],
   "order": 2
 }

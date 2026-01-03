@@ -2,14 +2,14 @@
 
 ## Document Information
 
-| Field | Value |
-|-------|-------|
-| **Project** | Personal Portfolio Website Enhancement |
+| Field             | Value                                    |
+| ----------------- | ---------------------------------------- |
+| **Project**       | Personal Portfolio Website Enhancement   |
 | **Document Type** | Brownfield Product Requirements Document |
-| **Author** | Portfolio Owner |
-| **Status** | Planning |
-| **Timeline** | Near Future (Next Few Weeks) |
-| **Last Updated** | 2025-11-07 |
+| **Author**        | Portfolio Owner                          |
+| **Status**        | Planning                                 |
+| **Timeline**      | Near Future (Next Few Weeks)             |
+| **Last Updated**  | 2025-11-07                               |
 
 ## Executive Summary
 
@@ -20,6 +20,7 @@ This PRD outlines multiple enhancements to the existing personal portfolio websi
 ### Existing System Overview
 
 The portfolio is a single-page application featuring:
+
 - Personal introduction and about section
 - Work experience timeline
 - Education history
@@ -86,6 +87,7 @@ The current portfolio requires developer intervention (code changes) for content
 **Impact**: High
 
 #### Current State
+
 - Content defined in `app/data.ts` as TypeScript objects
 - Limited fields for each content type
 - Requires code deployment for updates
@@ -93,12 +95,14 @@ The current portfolio requires developer intervention (code changes) for content
 #### Proposed Changes
 
 **Option A - Enhanced Data Files (Recommended for Near Term)**
+
 - Expand data structures to include more fields
 - Add support for rich text descriptions
 - Consider moving to JSON/YAML for easier editing
 - Maintain TypeScript types for validation
 
 **Option B - MDX-Based Content (Future Enhancement)**
+
 - Move content to MDX files (similar to blog posts)
 - Enable rich formatting and embedded components
 - Easier to edit without code knowledge
@@ -106,6 +110,7 @@ The current portfolio requires developer intervention (code changes) for content
 **New Fields to Add**:
 
 **Projects**:
+
 - Detailed description (multi-paragraph)
 - Technologies used (array of tech stack)
 - Key features/highlights
@@ -117,6 +122,7 @@ The current portfolio requires developer intervention (code changes) for content
 - Screenshots/images gallery (beyond current video)
 
 **Work Experience**:
+
 - Detailed responsibilities (bullet points)
 - Key achievements/metrics
 - Technologies used
@@ -124,6 +130,7 @@ The current portfolio requires developer intervention (code changes) for content
 - Notable projects during tenure
 
 **Skills**:
+
 - Proficiency level (beginner/intermediate/advanced)
 - Years of experience
 - Certifications (if applicable)
@@ -141,6 +148,7 @@ The current portfolio requires developer intervention (code changes) for content
 - Add content validation
 
 **Proposed Structure**:
+
 ```
 content/
 ├── projects/
@@ -200,6 +208,7 @@ content/
 **Impact**: Medium
 
 Potential new sections to add:
+
 - **Testimonials/Recommendations**: References from colleagues or clients
 - **Certifications**: Professional certifications and credentials
 - **Speaking/Writing**: Conference talks, blog posts, articles
@@ -222,14 +231,17 @@ Potential new sections to add:
 ### Architecture Decisions
 
 1. **Content Storage**:
+
    - **Near Term**: Enhanced JSON/YAML files in `content/` directory
    - **Future**: Headless CMS integration (Sanity, Contentful, etc.)
 
 2. **Type Safety**:
+
    - Maintain TypeScript types for all content structures
    - Add runtime validation using Zod or similar
 
 3. **Component Architecture**:
+
    - Keep existing component structure
    - Extend components to handle additional data fields
    - Create new detail view components as needed
@@ -241,15 +253,18 @@ Potential new sections to add:
 ### Files That Will Be Impacted
 
 **High Impact** (Significant changes):
+
 - `app/data.ts` - Will be refactored/relocated
 - `app/page.tsx` - Will need updates to display additional content
 - New files in `content/` directory
 
 **Medium Impact** (Moderate changes):
+
 - `components/ui/*` - May need extensions for detailed views
 - `app/layout.tsx` - Possible metadata updates
 
 **Low Impact** (Minor changes):
+
 - `app/header.tsx`, `app/footer.tsx` - Minimal or no changes
 - `app/globals.css` - Possible new styles for enhanced content
 - Configuration files - Minimal changes
@@ -257,17 +272,20 @@ Potential new sections to add:
 ### Migration Strategy
 
 1. **Phase 1 - Data Structure** (Week 1):
+
    - Create new content directory structure
    - Define enhanced TypeScript types
    - Migrate existing data to new format
    - Add validation
 
 2. **Phase 2 - Enhanced Content** (Week 1-2):
+
    - Add detailed content for projects
    - Expand work experience details
    - Enhance skills information
 
 3. **Phase 3 - UI Updates** (Week 2-3):
+
    - Update components to display new fields
    - Add expandable/detailed views
    - Implement filtering/categorization
@@ -282,21 +300,25 @@ Potential new sections to add:
 ## Non-Functional Requirements
 
 ### Performance
+
 - No degradation in page load time
 - Maintain current animation performance
 - Efficient content loading
 
 ### Accessibility
+
 - Maintain WCAG 2.1 AA compliance
 - Keyboard navigation for all new features
 - Screen reader compatibility
 
 ### Browser Compatibility
+
 - Support modern browsers (Chrome, Firefox, Safari, Edge)
 - Responsive design for all screen sizes
 - Graceful degradation for older browsers
 
 ### SEO
+
 - Maintain or improve current SEO
 - Proper meta tags for detailed content
 - Structured data for projects and experience
@@ -304,12 +326,14 @@ Potential new sections to add:
 ## Dependencies and Constraints
 
 ### Technical Dependencies
+
 - Next.js 15 App Router patterns
 - React 19 features and limitations
 - Tailwind CSS v4 capabilities
 - Motion-Primitives animation system
 
 ### Constraints
+
 - Must maintain existing deployment on Netlify
 - No breaking changes to current URLs
 - Preserve existing design aesthetic
@@ -326,6 +350,7 @@ Potential new sections to add:
 ## Future Considerations
 
 Beyond the initial enhancement scope:
+
 - Headless CMS integration for truly code-free updates
 - Admin dashboard for content management
 - Multi-language support
@@ -339,17 +364,18 @@ Beyond the initial enhancement scope:
 ### Content Schema Examples
 
 **Enhanced Project Schema**:
+
 ```typescript
 interface Project {
   // Existing fields
   id: string
   name: string
-  description: string  // Short description
+  description: string // Short description
   link: string
   video: string
 
   // New fields
-  longDescription: string  // Detailed multi-paragraph description
+  longDescription: string // Detailed multi-paragraph description
   technologies: string[]
   keyFeatures: string[]
   challenges?: string
@@ -370,6 +396,7 @@ interface Project {
 ```
 
 **Enhanced Work Experience Schema**:
+
 ```typescript
 interface WorkExperience {
   // Existing fields
@@ -387,11 +414,12 @@ interface WorkExperience {
   teamSize?: number
   location?: string
   employmentType: 'Full-time' | 'Part-time' | 'Contract' | 'Internship'
-  projects?: string[]  // References to project IDs
+  projects?: string[] // References to project IDs
 }
 ```
 
 ### References
+
 - Current codebase: `C:\Users\marshmary\Documents\portfolio\portfolio`
 - Based on Nim template: https://github.com/ibelick/nim
 - Motion-Primitives: https://motion-primitives.com

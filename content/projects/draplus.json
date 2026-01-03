@@ -14,5 +14,6 @@
     "Instant synchronization across clients"
   ],
   "order": 2,
-  "featured": true
+  "featured": true,
+  "images": ["/images/projects/draplus.webp"]
 }

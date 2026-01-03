@@ -13,5 +13,6 @@
     "Real-time audio processing"
   ],
   "order": 0,
-  "featured": true
+  "featured": true,
+  "images": ["/images/projects/avis.webp"]
 }

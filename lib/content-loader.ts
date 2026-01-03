@@ -4,10 +4,11 @@ import {
   ProjectSchema,
   WorkExperienceSchema,
   EducationSchema,
-  SkillCategorySchema,
   SkillsGroupSchema,
   SocialLinkSchema,
   ProfileSchema,
+  CertificationSchema,
+  GitHubStatsSchema,
   validateData,
   type Project,
   type WorkExperience,
@@ -16,6 +17,8 @@ import {
   type SkillsGroup,
   type SocialLink,
   type Profile,
+  type Certification,
+  type GitHubStats,
   type ContentCollection,
 } from '@/content/schema/types'
 
@@ -70,9 +73,7 @@ function readJSONDirectory<T>(dirPath: string): T[] {
     })
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(
-        `Failed to read directory ${dirPath}: ${error.message}`
-      )
+      throw new Error(`Failed to read directory ${dirPath}: ${error.message}`)
     }
     throw error
   }
@@ -89,7 +90,7 @@ export function loadProjects(): Project[] {
   const projectsData = readJSONDirectory('projects')
   return projectsData
     .map((data, index) =>
-      validateData(ProjectSchema, data, `projects[${index}]`)
+      validateData(ProjectSchema, data, `projects[${index}]`),
     )
     .sort((a, b) => (a.order || 0) - (b.order || 0))
 }
@@ -113,7 +114,7 @@ export function loadWorkExperience(): WorkExperience[] {
   const experienceData = readJSONDirectory('experience')
   return experienceData
     .map((data, index) =>
-      validateData(WorkExperienceSchema, data, `experience[${index}]`)
+      validateData(WorkExperienceSchema, data, `experience[${index}]`),
     )
     .sort((a, b) => (a.order || 0) - (b.order || 0))
 }
@@ -122,12 +123,14 @@ export function loadWorkExperience(): WorkExperience[] {
  * Loads all education entries and validates them
  */
 export function loadEducation(): Education[] {
-  const educationData = readJSONDirectory('experience')
-    .filter((data: any) => data.school) // Filter for education entries
+  const educationData = readJSONDirectory('experience').filter(
+    (data): data is Record<string, unknown> & { school: string } =>
+      typeof data === 'object' && data !== null && 'school' in data,
+  ) // Filter for education entries
 
   return educationData
     .map((data, index) =>
-      validateData(EducationSchema, data, `education[${index}]`)
+      validateData(EducationSchema, data, `education[${index}]`),
     )
     .sort((a, b) => (a.order || 0) - (b.order || 0))
 }
@@ -149,7 +152,7 @@ export function loadDevSkills(): SkillCategory[] {
   const validated = validateData(
     SkillsGroupSchema,
     skillsData,
-    'development-skills'
+    'development-skills',
   )
   return validated.skills.sort((a, b) => (a.order || 0) - (b.order || 0))
 }
@@ -162,7 +165,7 @@ export function loadSocialLinks(): SocialLink[] {
   if (Array.isArray(socialData)) {
     return socialData
       .map((data, index) =>
-        validateData(SocialLinkSchema, data, `social-links[${index}]`)
+        validateData(SocialLinkSchema, data, `social-links[${index}]`),
       )
       .sort((a, b) => (a.order || 0) - (b.order || 0))
   }
@@ -178,6 +181,49 @@ export function loadProfile(): Profile {
 }
 
 /**
+ * Loads certifications
+ */
+export function loadCertifications(): Certification[] {
+  try {
+    const certificationsPath = path.join(CONTENT_DIR, 'certifications')
+    if (!fs.existsSync(certificationsPath)) {
+      return []
+    }
+    const files = fs.readdirSync(certificationsPath)
+    return files
+      .filter((file) => file.endsWith('.json'))
+      .map((file) => {
+        const filePath = path.join(certificationsPath, file)
+        const content = fs.readFileSync(filePath, 'utf-8')
+        const data = JSON.parse(content)
+        return validateData(CertificationSchema, data, `certifications/${file}`)
+      })
+      .sort((a, b) => (a.order || 0) - (b.order || 0))
+  } catch (error) {
+    console.error('Error loading certifications:', error)
+    return []
+  }
+}
+
+/**
+ * Loads GitHub stats
+ */
+export function loadGitHubStats(): GitHubStats {
+  try {
+    const githubStatsPath = path.join(CONTENT_DIR, 'profile/github-stats.json')
+    if (!fs.existsSync(githubStatsPath)) {
+      return { achievements: [], topLanguages: [] }
+    }
+    const content = fs.readFileSync(githubStatsPath, 'utf-8')
+    const data = JSON.parse(content)
+    return validateData(GitHubStatsSchema, data, 'github-stats')
+  } catch (error) {
+    console.error('Error loading GitHub stats:', error)
+    return { achievements: [], topLanguages: [] }
+  }
+}
+
+/**
  * Loads all content at once
  */
 export function loadAllContent(): ContentCollection {
@@ -189,6 +235,8 @@ export function loadAllContent(): ContentCollection {
     devSkills: loadDevSkills(),
     socialLinks: loadSocialLinks(),
     profile: loadProfile(),
+    certifications: loadCertifications(),
+    githubStats: loadGitHubStats(),
   }
 }
 
@@ -208,9 +256,7 @@ export function getFeaturedProjects(): Project[] {
  */
 export function getProjectsByTechnology(tech: string): Project[] {
   return loadProjects().filter((project) =>
-    project.technologies?.some(
-      (t) => t.toLowerCase() === tech.toLowerCase()
-    )
+    project.technologies?.some((t) => t.toLowerCase() === tech.toLowerCase()),
   )
 }
 
@@ -219,11 +265,7 @@ export function getProjectsByTechnology(tech: string): Project[] {
  */
 export function getCurrentWorkExperience(): WorkExperience | null {
   const experiences = loadWorkExperience()
-  return (
-    experiences.find(
-      (exp) => exp.end.toLowerCase() === 'present'
-    ) || null
-  )
+  return experiences.find((exp) => exp.end.toLowerCase() === 'present') || null
 }
 
 // ============================================================================

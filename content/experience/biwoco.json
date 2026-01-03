@@ -17,11 +17,6 @@
     "Contributed to improving code quality through reviews",
     "Gained hands-on experience with professional development workflows"
   ],
-  "technologies": [
-    "JavaScript",
-    "React",
-    "Node.js",
-    "Git"
-  ],
+  "technologies": ["JavaScript", "React", "Node.js", "Git"],
   "order": 1
 }
