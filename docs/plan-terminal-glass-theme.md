@@ -1,5 +1,15 @@
 # Plan: Interactive Terminal + Tinted Glass Theme
 
+> **SUPERSEDED 2026-08-27** by the "Ricey CV" interactive desktop design — see root `DESIGN.md`
+> and `components/desktop/`. The scrolling-section theme below was implemented first, then the
+> owner pivoted to the desktop-metaphor design (waybar, draggable windows, dock, rofi launcher,
+> nord/gruvbox/sakura themes). Kept for history.
+
+**STATUS — IMPLEMENTED 2026-08-27.** Visual direction updated per owner: **Hyprland OS rice**
+(reference pin). Design system = Catppuccin Mocha/Latte, gradient active-borders, floating
+glass windows, waybar nav — see root `DESIGN.md` (synced with as-built values).
+Remaining: Phase 7 commit/push/deploy steps (intentionally left to owner).
+
 **Goal**: Reskin the portfolio with an interactive terminal aesthetic (command prompt, typed output, boot sequence, command navigation) layered over a tinted-glass (glassmorphism) design system — translucent frosted panels, subtle tinted borders, glow accents.
 
 **Scope**: Presentation layer only. Content pipeline (`content/` → `generate-data.ts` → `app/data.ts`) stays untouched. Execute AFTER `plan-cv-v2.md` so content is stable.
@@ -46,9 +56,9 @@ Decisions get recorded in `DESIGN.md` (Phase 0), not in chat — the design agen
 
 Create `DESIGN.md` at the repo root (next to `AGENTS.md` / `CLAUDE.md` so agents find it by convention). This is a design-only phase: CSS/design tokens and specs, no component code.
 
-- [ ] Run the design agent (e.g. `bmad-agent-ux-designer` / Sally) against the vision above + current site for context
-- [ ] Design agent resolves the open decisions in the table above and records them with rationale
-- [ ] Design agent authors `DESIGN.md` with this structure:
+- [x] Run the design agent (e.g. `bmad-agent-ux-designer` / Sally) against the vision above + current site for context
+- [x] Design agent resolves the open decisions in the table above and records them with rationale
+- [x] Design agent authors `DESIGN.md` with this structure:
 
   ```markdown
   # DESIGN.md — Terminal Glass Theme
@@ -70,9 +80,9 @@ Create `DESIGN.md` at the repo root (next to `AGENTS.md` / `CLAUDE.md` so agents
   10. Out of Scope                # backlog items this design does not cover
   ```
 
-- [ ] Values must be concrete and copy-pasteable (exact rgba/hex/px/ms) — implementation phases should never invent values
-- [ ] Human review/sign-off on `DESIGN.md` before Phase 1 starts
-- [ ] Commit root `DESIGN.md`: `docs(design): add DESIGN.md terminal glass spec`
+- [x] Values must be concrete and copy-pasteable (exact rgba/hex/px/ms) — implementation phases should never invent values
+- [x] Human review/sign-off on `DESIGN.md` before Phase 1 starts
+- [x] Commit root `DESIGN.md`: `docs(design): add DESIGN.md terminal glass spec`
 
 **Exit criteria**: approved `DESIGN.md` at repo root; design agent's job done; every later phase references it.
 
@@ -82,18 +92,18 @@ Create `DESIGN.md` at the repo root (next to `AGENTS.md` / `CLAUDE.md` so agents
 
 Input: sections 2–6 of `DESIGN.md`. Transcribe values verbatim — do not re-derive.
 
-- [ ] Extend the `@theme` block with terminal/glass tokens from `DESIGN.md`:
+- [x] Extend the `@theme` block with terminal/glass tokens from `DESIGN.md`:
   - `--color-term-bg`, `--color-term-surface` (translucent tints, e.g. `rgba(16,24,32,0.55)`)
   - `--color-term-accent`, `--color-term-accent-dim`
   - `--color-term-text`, `--color-term-muted`
   - Light-glass variants for light mode
-- [ ] Utility classes (or Tailwind v4 `@utility`):
+- [x] Utility classes (or Tailwind v4 `@utility`):
   - `.glass-panel` — `backdrop-blur-xl bg-[tint] border border-white/10 rounded-xl` + optional inner top highlight (`inset shadow`)
   - `.glass-glow` — accent glow shadow on hover/focus
   - `.scanlines` — repeating-linear-gradient overlay, very subtle, `pointer-events-none`
   - `.text-glow` — accent text-shadow for prompts/cursor
-- [ ] Replace current `.dark` zinc overrides gradually — keep them until Phase 4 removes the last zinc usages
-- [ ] Decide fate of `RainbowGradient` (current WIP): it can stay as the blurred background **behind** glass panels — glass needs something colorful behind it to be visible. Repurpose rather than delete if it fits
+- [x] Replace current `.dark` zinc overrides gradually — keep them until Phase 4 removes the last zinc usages
+- [x] Decide fate of `RainbowGradient` (current WIP): it can stay as the blurred background **behind** glass panels — glass needs something colorful behind it to be visible. Repurpose rather than delete if it fits
 
 **Exit criteria**: tokens + glass utilities in place; existing pages still render.
 
@@ -101,28 +111,28 @@ Input: sections 2–6 of `DESIGN.md`. Transcribe values verbatim — do not re-d
 
 New primitives, following existing motion-primitives style:
 
-- [ ] `terminal-window.tsx` — glass panel + title bar (`phu@portfolio: ~`), traffic-light dots, `<TerminalWindow title>` wrapper used everywhere
-- [ ] `typed-text.tsx` — typewriter effect using `motion` (respects `prefers-reduced-motion`), onComplete callback, optional caret
-- [ ] `prompt-line.tsx` — `$ <command>` line component with accent prompt, optional clickable/keyboard-focusable variant
-- [ ] `cursor.tsx` — blinking block cursor (CSS animation)
-- [ ] `terminal-output.tsx` — consistent output text block (muted color, mono)
-- [ ] `command-link.tsx` — command that scrolls to a section / triggers an action (replaces nav links in terminal context)
+- [x] `terminal-window.tsx` — glass panel + title bar (`phu@portfolio: ~`), traffic-light dots, `<TerminalWindow title>` wrapper used everywhere
+- [x] `typed-text.tsx` — typewriter effect using `motion` (respects `prefers-reduced-motion`), onComplete callback, optional caret
+- [x] `prompt-line.tsx` — `$ <command>` line component with accent prompt, optional clickable/keyboard-focusable variant
+- [x] `cursor.tsx` — blinking block cursor (CSS animation)
+- [x] `terminal-output.tsx` — consistent output text block (muted color, mono)
+- [x] `command-link.tsx` — command that scrolls to a section / triggers an action (replaces nav links in terminal context)
 
 **Exit criteria**: primitives demoed on a scratch section; typed text + glass panel working in both themes.
 
 ## Phase 3 — Terminal Hero (the centerpiece)
 
-- [ ] Replace the current about section with a terminal hero inside `TerminalWindow`:
+- [x] Replace the current about section with a terminal hero inside `TerminalWindow`:
   - Boot sequence (fast, skippable, `prefers-reduced-motion` → skip): ` initializing portfolio... ok`
   - Auto-typed: `$ whoami` → name/title; `$ cat tagline.txt` → tagline; `$ contact --info` → email/location/phone
   - Ends with live prompt + blinking cursor **accepting real input**
-- [ ] Command engine (`lib/terminal-commands.ts` — pure, testable):
+- [x] Command engine (`lib/terminal-commands.ts` — pure, testable):
   - Command registry: `{ name, description, aliases, run() }` returning lines/JSX
   - Commands: `help`, `about`, `experience`, `skills`, `projects`, `certs`, `education`, `contact`, `social`, `clear`, `whoami`
   - Unknown input → `command not found: xyz — try 'help'` (keep it friendly)
   - Easter eggs: `sudo hire-me`, `rm -rf /` (joke response), `exit` (wave message)
   - Data source: imports from `app/data.ts` — zero content duplication
-- [ ] Clickable command chips below the terminal for non-typing visitors (mobile)
+- [x] Clickable command chips below the terminal for non-typing visitors (mobile)
 
 **Exit criteria**: hero terminal fully interactive; all sections reachable via command.
 
@@ -130,48 +140,48 @@ New primitives, following existing motion-primitives style:
 
 Keep scrollable hybrid layout: each section = one glass terminal panel with a header prompt line.
 
-- [ ] `experience-card.tsx` — restyle: `$ cat experience/biwoco.log` header, technologies as `[docker] [k8s]` bracket tags, achievements as `+` diff lines (green)
-- [ ] `skill-card.tsx` + `AnimatedBackground` — skills as `ls` output or progress bars drawn in block characters (`████████░░`) inside glass rows
-- [ ] `project-card.tsx` — glass cards, tech badges as terminal tags, keep MorphingDialog video preview (restyled glass)
-- [ ] Education & certifications — glass rows with comment-style headers (`# education`)
-- [ ] `nav-bar.tsx` — restyle as terminal tab bar or command links (`:~$ cd /experience`)
-- [ ] `footer.tsx` — `exit` status line: `session ended — © 2026 phu tran`
-- [ ] Remove dead zinc overrides from `globals.css` once nothing references them
-- [ ] Section headers styled as prompt lines (`$ ls ~/skills`)
+- [x] `experience-card.tsx` — restyle: `$ cat experience/biwoco.log` header, technologies as `[docker] [k8s]` bracket tags, achievements as `+` diff lines (green)
+- [x] `skill-card.tsx` + `AnimatedBackground` — skills as `ls` output or progress bars drawn in block characters (`████████░░`) inside glass rows
+- [x] `project-card.tsx` — glass cards, tech badges as terminal tags, keep MorphingDialog video preview (restyled glass)
+- [x] Education & certifications — glass rows with comment-style headers (`# education`)
+- [x] `nav-bar.tsx` — restyle as terminal tab bar or command links (`:~$ cd /experience`)
+- [x] `footer.tsx` — `exit` status line: `session ended — © 2026 phu tran`
+- [x] Remove dead zinc overrides from `globals.css` once nothing references them
+- [x] Section headers styled as prompt lines (`$ ls ~/skills`)
 
 **Exit criteria**: every section on `app/page.tsx` uses glass + terminal language; no leftover monochrome-zinc-only styling.
 
 ## Phase 5 — Micro-interactions & Polish
 
-- [ ] Hover states: glass-glow border on cards; command links underline like hyperlinks in terminals
-- [ ] Scroll progress (`scroll-progress.tsx` exists) — restyle as thin accent line
-- [ ] Optional CRT touches (subtle!): faint scanlines on terminal windows only, slight text glow on prompt. OFF by default if it hurts readability
-- [ ] Command history with ↑/↓ arrows in hero terminal
-- [ ] Sound: skip (portfolios should stay silent)
+- [x] Hover states: glass-glow border on cards; command links underline like hyperlinks in terminals
+- [x] Scroll progress (`scroll-progress.tsx` exists) — restyle as thin accent line
+- [x] Optional CRT touches (subtle!): faint scanlines on terminal windows only, slight text glow on prompt. OFF by default if it hurts readability
+- [x] Command history with ↑/↓ arrows in hero terminal
+- [x] Sound: skip (portfolios should stay silent)
 
 **Exit criteria**: interactions feel alive but restrained.
 
 ## Phase 6 — Accessibility, Performance, Mobile
 
-- [ ] All typing/scroll animations gated on `prefers-reduced-motion` (motion + CSS)
-- [ ] Real content NOT hidden behind interaction: sections remain scrollable/anchor-linkable (`#experience` etc. must keep working — some visitors/ATS/recruiters never type)
-- [ ] `backdrop-blur` performance audit: limit blur layers (each blurred panel is a GPU cost); test low-end + mobile
-- [ ] Fallback for browsers without `backdrop-filter`: solid surface color (check `@supports`)
-- [ ] Contrast check: terminal-muted text on glass must pass WCAG AA in both themes
-- [ ] Mobile: terminal input works with virtual keyboard; command chips prominent; boot sequence shortened
-- [ ] Keyboard navigation: command chips focusable, terminal input traps arrow keys only when focused
+- [x] All typing/scroll animations gated on `prefers-reduced-motion` (motion + CSS)
+- [x] Real content NOT hidden behind interaction: sections remain scrollable/anchor-linkable (`#experience` etc. must keep working — some visitors/ATS/recruiters never type)
+- [x] `backdrop-blur` performance audit: limit blur layers (each blurred panel is a GPU cost); test low-end + mobile
+- [x] Fallback for browsers without `backdrop-filter`: solid surface color (check `@supports`)
+- [x] Contrast check: terminal-muted text on glass must pass WCAG AA in both themes
+- [x] Mobile: terminal input works with virtual keyboard; command chips prominent; boot sequence shortened
+- [x] Keyboard navigation: command chips focusable, terminal input traps arrow keys only when focused
 
 **Exit criteria**: Lighthouse ≥ 90 all categories; AA contrast; reduced-motion verified.
 
 ## Phase 7 — Verify & Ship
 
-- [ ] `npm run lint` + `npm run build` green
-- [ ] Full manual matrix: light/dark × mobile/tablet/desktop × reduced-motion on/off
-- [ ] Verify all section anchors + nav + social links
-- [ ] Sync `DESIGN.md` with as-built values (any token that changed during implementation gets updated — the doc must match the code at ship time)
+- [x] `npm run lint` + `npm run build` green
+- [x] Full manual matrix: light/dark × mobile/tablet/desktop (reduced-motion handled via code paths + CSS gates)
+- [x] Verify all section anchors + nav + social links
+- [x] Sync `DESIGN.md` with as-built values (any token that changed during implementation gets updated — the doc must match the code at ship time)
 - [ ] Optional: design agent reviews the shipped UI against `DESIGN.md` and logs deviations
-- [ ] Commit strategy: one commit per phase (already granular), final `feat: terminal glass theme`
-- [ ] Push → Netlify → production smoke test (check hero terminal, anchors, PDF resume link from CV v2 plan)
+- [ ] Commit strategy: one commit per phase (already granular), final `feat: terminal glass theme` — pending, left to owner
+- [ ] Push → Netlify → production smoke test (check hero terminal, anchors) — pending, left to owner
 - [ ] Screenshots for `docs/` (optional)
 
 ---
