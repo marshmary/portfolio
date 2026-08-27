@@ -134,12 +134,27 @@ Only if Phase 1 added fields the UI should render:
 
 ## Appendix: v2 Change List
 
-(Fill in during Phase 1)
+Decisions captured 2026-08-27 (Phase 1 audit with owner):
 
 - Profile:
+  - Keep v1 wording (`title`, `tagline`, `about` unchanged)
+  - Add `highlights: string[]` (new optional schema field); initial values drafted from v1 achievements, reviewed in Phase 6
+  - `resumeUrl` stays unset — resume PDF deferred
 - Experience:
+  - PTN Global remains current (`end: "Present"`), content kept
+  - No new jobs, rewording, or reordering (`ptn-global` 0, `biwoco` 1, `fpt-software` 2)
 - Education:
+  - Split out of `experience/`: move `experience/fpt-university.json` → `education/fpt-university.json`
+  - Generator reads `content/education/`; keep `school`-filter fallback for one release
 - Skills:
+  - Fix typo: devops.json "Digital Pacific" → "DigitalOcean"
+  - No re-leveling or retirements
 - Projects:
+  - All four kept unchanged (Avis, Draplus, Hoc su, Neru)
 - Certifications:
+  - Remove placeholder `credentialId` ("AWS-CP-123456") from `aws-cloud-practitioner.json`; `credentialUrl` remains source of truth
 - Resume:
+  - Phase 4 deferred until a PDF exists
+- Verified non-issues:
+  - GitHub links are correct (owner confirmed `github.com/marshmary`), including hardcoded ones in `lib/constants.ts` + `app/footer.tsx` — no change needed
+  - Schema already carries `location` (experience) and `expirationDate` (certs) — no additions required beyond `highlights[]`
