@@ -3,13 +3,15 @@
   "mcp": {
     "chrome-devtools": {
       "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
-      "enabled": true
+      "command": ["npx", "-y", "chrome-devtools-mcp@1.8.0"],
+      "enabled": true,
+      "timeout": 60000
     },
     "context7": {
       "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"],
-      "enabled": true
+      "command": ["npx", "-y", "@upstash/context7-mcp@4.0.3"],
+      "enabled": true,
+      "timeout": 60000
     }
   }
 }
