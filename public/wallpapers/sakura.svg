@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1218"/>
+      <stop offset="0.55" stop-color="#3d2733"/>
+      <stop offset="0.8" stop-color="#6e4358"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#33232c"/>
+      <stop offset="1" stop-color="#251d22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="840" fill="url(#sky)"/>
+  <circle cx="1440" cy="230" r="95" fill="#f7ecf2" opacity="0.9"/>
+  <circle cx="1410" cy="210" r="95" fill="url(#sky)" opacity="0.9"/>
+  <g fill="#f0e4ea" opacity="0.55">
+    <circle cx="300" cy="140" r="2"/><circle cx="560" cy="240" r="1.5"/><circle cx="820" cy="110" r="2"/>
+    <circle cx="1040" cy="220" r="1.5"/><circle cx="1200" cy="90" r="2"/><circle cx="1760" cy="300" r="1.5"/>
+  </g>
+  <path d="M0 620 L320 460 L620 600 L920 440 L1240 620 L1540 480 L1920 640 L1920 840 L0 840 Z" fill="#4a3040"/>
+  <path d="M0 720 L420 580 L840 720 L1260 600 L1680 730 L1920 650 L1920 840 L0 840 Z" fill="#33232c"/>
+  <g fill="#ec6a88" opacity="0.8">
+    <circle cx="180" cy="660" r="5"/><circle cx="360" cy="620" r="4"/><circle cx="540" cy="680" r="5"/>
+    <circle cx="760" cy="640" r="4"/><circle cx="980" cy="690" r="5"/><circle cx="1200" cy="650" r="4"/>
+    <circle cx="1420" cy="700" r="5"/><circle cx="1640" cy="660" r="4"/>
+  </g>
+  <g fill="#ec6a88" opacity="0.4">
+    <circle cx="260" cy="720" r="3"/><circle cx="620" cy="740" r="3"/><circle cx="1100" cy="730" r="3"/>
+    <circle cx="1520" cy="740" r="3"/><circle cx="860" cy="710" r="3"/>
+  </g>
+  <rect y="840" width="1920" height="240" fill="url(#ground)"/>
+  <g fill="#f0e4ea" opacity="0.07">
+    <rect x="240" y="890" width="220" height="3" rx="1.5"/><rect x="760" y="930" width="260" height="3" rx="1.5"/>
+    <rect x="1300" y="890" width="200" height="3" rx="1.5"/><rect x="1680" y="960" width="180" height="3" rx="1.5"/>
+  </g>
+</svg>

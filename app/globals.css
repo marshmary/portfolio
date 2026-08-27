@@ -1,183 +1,244 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
-@custom-variant dark (&:is(.dark *));
 
 /* ==========================================================================
-   CUSTOM COLOR PALETTE - Sophisticated Monochromatic Dark Theme
-   Based on: https://i.pinimg.com/1200x/ab/b7/dd/abb7dd669e737c34079f7ba7f6eda6a4.jpg
-
-   Color Scheme:
-   - Background: #1A1A1A (deep dark gray)
-   - Surface: #242424 (elevated elements)
-   - Border: #333333 (subtle borders)
-   - Text Primary: #FFFFFF (bright white)
-   - Text Secondary: #CCCCCC (light gray)
-   - Text Muted: #999999 (medium gray)
-========================================================================== */
+   "RICEY CV" — Interactive Desktop-Rice Theme
+   Reference: DESIGN.md (repo root) · Linux desktop rice, glassmorphism
+   Themes: nord (default) / gruvbox / sakura — swapped via [data-theme]
+   ========================================================================== */
 
 @theme {
-  /* Light Theme Colors */
-  --color-background: #ffffff;
-  --color-surface: #f4f4f5;
-  --color-border: #e4e4e7;
-  --color-text-primary: #18181b;
-  --color-text-secondary: #52525b;
-  --color-text-muted: #a1a1aa;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  --font-sans: var(--font-jetbrains), ui-sans-serif, system-ui, sans-serif;
 
-  /* Dark Theme Colors (Monochromatic) */
-  --color-dark-background: #1a1a1a;
-  --color-dark-surface: #242424;
-  --color-dark-border: #333333;
-  --color-dark-text-primary: #ffffff;
-  --color-dark-text-secondary: #cccccc;
-  --color-dark-text-muted: #999999;
+  --radius-window: 10px;
+
+  /* Typography Scale */
+  --font-size-xs: 0.813rem; /* 13px */
+  --font-size-sm: 0.938rem; /* 15px */
+  --font-size-base: 1.063rem; /* 17px */
+  --font-size-lg: 1.188rem; /* 19px */
+  --font-size-xl: 1.313rem; /* 21px */
+  --font-size-2xl: 1.625rem; /* 26px */
+  --font-size-3xl: 2rem; /* 32px */
+  --font-size-4xl: 2.5rem; /* 40px */
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+/* --- Theme tokens (DESIGN.md §2.1) --- */
+:root,
+[data-theme='nord'] {
+  --bg: #2e3440;
+  --panel: rgba(46, 52, 64, 0.55);
+  --panel-solid: #2e3440;
+  --border: rgba(236, 239, 244, 0.12);
+  --text: #d8dee9;
+  --heading: #eceff4;
+  --muted: #aebacf;
+  --faint: #7b88a1;
+  --accent: #88c0d0;
+  --accent-2: #81a1c1;
+  --red: #bf616a;
+  --yellow: #ebcb8b;
+  --green: #a3be8c;
+  --wallpaper: url('/wallpapers/nord.svg');
+  --wallpaper-dim: rgba(0, 0, 0, 0.15);
+  --shadow-window: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-window-focus: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+[data-theme='gruvbox'] {
+  --bg: #282828;
+  --panel: rgba(40, 40, 40, 0.6);
+  --panel-solid: #282828;
+  --border: rgba(235, 219, 178, 0.12);
+  --text: #ebdbb2;
+  --heading: #fbf1c7;
+  --muted: #d5c4a1;
+  --faint: #928374;
+  --accent: #8ec07c;
+  --accent-2: #fabd2f;
+  --red: #fb4934;
+  --yellow: #fabd2f;
+  --green: #b8bb26;
+  --wallpaper: url('/wallpapers/gruvbox.svg');
+  --wallpaper-dim: rgba(0, 0, 0, 0.15);
+  --shadow-window: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --shadow-window-focus: 0 16px 48px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme='sakura'] {
+  --bg: #251d22;
+  --panel: rgba(37, 29, 34, 0.58);
+  --panel-solid: #251d22;
+  --border: rgba(240, 228, 234, 0.12);
+  --text: #f0e4ea;
+  --heading: #f7ecf2;
+  --muted: #c9b3c1;
+  --faint: #9d8796;
+  --accent: #ec6a88;
+  --accent-2: #c79bf2;
+  --red: #e06c75;
+  --yellow: #e5c07b;
+  --green: #9ece6a;
+  --wallpaper: url('/wallpapers/sakura.svg');
+  --wallpaper-dim: rgba(0, 0, 0, 0.25);
+  --shadow-window: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-window-focus: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* Syntax highlighting (sugar-high) — nord-toned */
+:root {
+  --sh-class: #88c0d0;
+  --sh-sign: #81a1c1;
+  --sh-string: #a3be8c;
+  --sh-keyword: #b48ead;
+  --sh-comment: #616e88;
+  --sh-jsxliterals: #88c0d0;
+  --sh-property: #8fbcbb;
+  --sh-entity: #d08770;
+}
+
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--border);
   }
 
-  /* Dark mode base styles for monochromatic theme */
-  .dark {
-    background-color: #1a1a1a;
-    color: #ffffff;
+  html,
+  body {
+    height: 100%;
   }
 
-  /* Override zinc colors in dark mode with monochromatic palette */
-  .dark .bg-zinc-950,
-  .dark .bg-zinc-900 {
-    background-color: #1a1a1a !important;
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
   }
 
-  .dark .bg-zinc-800 {
-    background-color: #242424 !important;
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
-  .dark .bg-zinc-100,
-  .dark .bg-zinc-200,
-  .dark .bg-zinc-300 {
-    background-color: #242424 !important;
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 
-  .dark .bg-white {
-    background-color: #1a1a1a !important;
+  /* Slim themed scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
   }
 
-  /* Text colors */
-  .dark .text-zinc-100 {
-    color: #ffffff !important;
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
   }
 
-  .dark .text-zinc-200,
-  .dark .text-zinc-300 {
-    color: #cccccc !important;
+  ::-webkit-scrollbar-track {
+    background: transparent;
   }
 
-  .dark .text-zinc-400 {
-    color: #999999 !important;
-  }
-
-  .dark .text-zinc-500,
-  .dark .text-zinc-600 {
-    color: #888888 !important;
-  }
-
-  /* Border colors */
-  .dark .border-zinc-800 {
-    border-color: #333333 !important;
-  }
-
-  .dark .border-zinc-200,
-  .dark .border-zinc-700,
-  .dark .border-zinc-600 {
-    border-color: #333333 !important;
-  }
-
-  /* Gradient and overlay overrides */
-  .dark .from-zinc-900 {
-    --tw-gradient-from: #1a1a1a !important;
-  }
-
-  .dark .via-zinc-800 {
-    --tw-gradient-via: #242424 !important;
-  }
-
-  .dark .to-zinc-700 {
-    --tw-gradient-to: #333333 !important;
-  }
-
-  .dark .from-zinc-100 {
-    --tw-gradient-from: #ffffff !important;
-  }
-
-  .dark .via-zinc-200 {
-    --tw-gradient-via: #cccccc !important;
-  }
-
-  .dark .to-zinc-50 {
-    --tw-gradient-to: #e5e5e5 !important;
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: var(--border);
   }
 }
 
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
+/* ==========================================================================
+   GLASS SYSTEM (DESIGN.md §2.2)
+   ========================================================================== */
+
+@utility glass {
+  background: var(--panel);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-window);
+  box-shadow:
+    var(--shadow-window),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+@utility glass-strong {
+  background: color-mix(in srgb, var(--panel-solid) 70%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--border);
+  box-shadow:
+    var(--shadow-window),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* Focused / active window (DESIGN.md §5) */
+@utility glass-focus {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow:
+    var(--shadow-window-focus),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .glass,
+  .glass-strong {
+    background: var(--panel-solid);
+  }
+}
+
+@media (max-width: 768px) {
+  .glass,
+  .glass-strong {
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+  }
+}
+
+/* ==========================================================================
+   MOTION (DESIGN.md §8)
+   ========================================================================== */
+
+@keyframes window-open {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
   }
   50% {
-    background-position: 100% 50%;
+    opacity: 0;
   }
-  100% {
-    background-position: 0% 50%;
-  }
+}
+
+.window-open-anim {
+  animation: window-open 150ms ease-out backwards;
+}
+
+.caret {
+  animation: caret-blink 1s step-end infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-gradient] {
-    animation: none !important;
+  .window-open-anim {
+    animation: none;
   }
-}
 
-:root {
-  --sh-class: #7aa2f7;
-  --sh-sign: #89ddff;
-  --sh-string: #9ece6a;
-  --sh-keyword: #bb9af7;
-  --sh-comment: #565f89;
-  --sh-jsxliterals: #7aa2f7;
-  --sh-property: #73daca;
-  --sh-entity: #e0af68;
-
-  /* Typography Scale - Consistent visual hierarchy */
-  --font-size-xs: 0.813rem;   /* 13px - captions, labels */
-  --font-size-sm: 0.938rem;   /* 15px - secondary text */
-  --font-size-base: 1.063rem;  /* 17px - body text */
-  --font-size-lg: 1.188rem;   /* 19px - emphasized text */
-  --font-size-xl: 1.313rem;   /* 21px - small headings */
-  --font-size-2xl: 1.625rem;  /* 26px - section headings */
-  --font-size-3xl: 2rem;      /* 32px - page headings */
-  --font-size-4xl: 2.5rem;    /* 40px - hero headings */
-
-  /* Line Heights */
-  --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
-
-  /* Font Weights */
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  .caret {
+    animation: none;
+  }
 }
