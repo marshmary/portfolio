@@ -165,6 +165,33 @@ export default function Personal() {
               {PROFILE.about}
             </p>
 
+            {/* Highlights */}
+            {PROFILE.highlights && PROFILE.highlights.length > 0 && (
+              <ul className="flex flex-col gap-2">
+                {PROFILE.highlights.map((highlight) => (
+                  <li
+                    key={highlight}
+                    className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400"
+                  >
+                    <svg
+                      className="h-4 w-4 shrink-0 text-emerald-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            )}
+
             {/* Location and Phone */}
             <div className="flex flex-wrap items-center gap-4 text-base text-zinc-500 dark:text-zinc-400">
               {PROFILE.location && (

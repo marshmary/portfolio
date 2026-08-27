@@ -63,9 +63,13 @@ function generateDataFile() {
       )
       .sort((a, b) => (a.order || 0) - (b.order || 0))
 
-    const educationData = readJSONDirectory(
-      path.join(CONTENT_DIR, 'experience'),
-    ).filter((data: any) => data.school) // Only education
+    // Load education - v2: dedicated directory; v1 fallback: filter experience/ by school field
+    const educationDir = path.join(CONTENT_DIR, 'education')
+    const educationData = fs.existsSync(educationDir)
+      ? readJSONDirectory(educationDir)
+      : readJSONDirectory(path.join(CONTENT_DIR, 'experience')).filter(
+          (data: any) => data.school,
+        )
 
     const education = educationData
       .map((data, index) =>
@@ -264,6 +268,7 @@ type Profile = {
   phone?: string
   location?: string
   about: string
+  highlights?: string[]
   resumeUrl?: string
   avatar?: string
 }

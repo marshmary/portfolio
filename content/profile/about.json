@@ -6,5 +6,11 @@
   "email": "contact@phutran.dev",
   "phone": "(+84) 763 883 037",
   "location": "Can Tho City, Vietnam",
-  "about": "A passionate DevOps engineer with expertise in automating infrastructure, optimizing deployment pipelines, and enhancing system reliability. Skilled in cloud platforms, CI/CD tools, and containerization, I bridge the gap between development and operations to deliver scalable, efficient, and secure software solutions."
+  "about": "A passionate DevOps engineer with expertise in automating infrastructure, optimizing deployment pipelines, and enhancing system reliability. Skilled in cloud platforms, CI/CD tools, and containerization, I bridge the gap between development and operations to deliver scalable, efficient, and secure software solutions.",
+  "highlights": [
+    "3+ years automating cloud infrastructure and CI/CD pipelines",
+    "AWS Certified Cloud Practitioner",
+    "Cut deployment time by 60% through automation",
+    "Sustained 99.9% uptime with full observability stack"
+  ]
 }

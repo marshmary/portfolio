@@ -4,7 +4,7 @@
     {
       "uid": "devops-cloud",
       "title": "Cloud Computing Platforms",
-      "description": "AWS, Digital Pacific, Azure, Firebase",
+      "description": "AWS, DigitalOcean, Azure, Firebase",
       "link": "",
       "proficiencyLevel": "Advanced",
       "order": 0

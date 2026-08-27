@@ -156,6 +156,7 @@ export const ProfileSchema = z.object({
   phone: z.string().optional(),
   location: z.string().optional(),
   about: z.string().min(1, 'About text is required'),
+  highlights: z.array(z.string()).optional(),
   resumeUrl: z.string().url().optional(),
   avatar: z.string().url().optional(),
 })
