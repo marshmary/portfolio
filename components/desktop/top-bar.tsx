@@ -20,6 +20,14 @@ const TASKBAR_ORDER: WindowId[] = [
 export function TopBar() {
   const { windows, dispatch, theme, launcherOpen } = useDesktop()
   const [clock, setClock] = useState<string | null>(null)
+  const [shortcut, setShortcut] = useState('Ctrl K')
+
+  useEffect(() => {
+    const isMac = /Mac|iPhone|iPad|iPod/.test(
+      navigator.userAgent || navigator.platform,
+    )
+    setShortcut(isMac ? '⌘K' : 'Ctrl K')
+  }, [])
 
   useEffect(() => {
     const format = () => {
@@ -156,7 +164,7 @@ export function TopBar() {
           }
           className="flex h-7 items-center gap-1.5 rounded-lg px-2 text-xs transition-colors hover:text-[color:var(--accent)]"
           style={{ color: 'var(--faint)' }}
-          aria-label="Open command launcher (⌘K)"
+          aria-label={`Open command launcher (${shortcut})`}
           aria-expanded={launcherOpen}
         >
           <Search className="h-3.5 w-3.5" />
@@ -164,7 +172,7 @@ export function TopBar() {
             className="hidden rounded border px-1 text-[10px] md:inline"
             style={{ borderColor: 'var(--border)' }}
           >
-            ⌘K
+            {shortcut}
           </kbd>
         </button>
       </div>

@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/',
+      // PII (plan-performance-seo-privacy F7): keep the resume PDF out of
+      // indexes; /private/ stays reserved for future non-public assets
+      disallow: ['/private/', '/resume*.pdf'],
     },
     sitemap: `${WEBSITE_URL}/sitemap.xml`,
   }

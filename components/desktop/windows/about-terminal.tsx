@@ -82,9 +82,19 @@ function bootHistory(): HistoryEntry[] {
  * live command prompt afterwards.
  */
 export function AboutTerminal() {
-  const { dispatch, reducedMotion, windows: desktopWindows } = useDesktop()
-  const [history, setHistory] = useState<HistoryEntry[]>([])
-  const [bootDone, setBootDone] = useState(false)
+  const {
+    dispatch,
+    reducedMotion,
+    mode,
+    windows: desktopWindows,
+  } = useDesktop()
+  // Full boot content is server-rendered so the bio exists in the served
+  // HTML (SEO/a11y) and stack-mode cards never grow after hydration
+  // (CLS: plan-performance-seo-privacy Phase 2). The desktop-mode typing
+  // animation below clears and retypes it; desktop windows are absolutely
+  // positioned with fixed heights, so that causes zero layout shift.
+  const [history, setHistory] = useState<HistoryEntry[]>(bootHistory)
+  const [bootDone, setBootDone] = useState(true)
   const [typingCommand, setTypingCommand] = useState('')
   const [input, setInput] = useState('')
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
@@ -106,7 +116,7 @@ export function AboutTerminal() {
 
   useEffect(() => {
     const visited = localStorage.getItem('ricey-visited')
-    if (reducedMotion || visited) {
+    if (reducedMotion || visited || mode === 'stack') {
       finishBoot()
       localStorage.setItem('ricey-visited', '1')
       return
@@ -119,6 +129,8 @@ export function AboutTerminal() {
 
     async function run() {
       await sleep(400)
+      if (cancelled || skippedRef.current) return
+      setHistory([])
       for (const step of BOOT_STEPS) {
         if (cancelled || skippedRef.current) return
         if (step.kind === 'output') {
@@ -147,7 +159,7 @@ export function AboutTerminal() {
     return () => {
       cancelled = true
     }
-  }, [reducedMotion])
+  }, [reducedMotion, mode])
 
   useEffect(() => {
     const el = scrollRef.current
@@ -229,7 +241,7 @@ export function AboutTerminal() {
     <div
       ref={scrollRef}
       className="flex h-full flex-col gap-2 overflow-y-auto"
-      onClick={() => bootDone && inputRef.current?.focus()}
+      onClick={() => inputRef.current?.focus()}
     >
       {history.map((entry, index) =>
         entry.kind === 'cmd' ? (
@@ -253,38 +265,36 @@ export function AboutTerminal() {
         ),
       )}
 
-      {!bootDone && typingCommand && <PromptLine command={typingCommand} />}
+      {!typingCommand ? null : <PromptLine command={typingCommand} />}
 
-      {bootDone && (
-        <div className="mt-auto flex items-baseline gap-2 pt-1">
-          <span
-            aria-hidden
-            className="shrink-0 select-none"
-            style={{ color: 'var(--accent)' }}
-          >
-            ❯
-          </span>
-          <input
-            ref={inputRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setInputFocused(true)}
-            onBlur={() => setInputFocused(false)}
-            className="min-w-0 shrink grow-0 bg-transparent font-mono text-[13px] outline-none"
-            style={{
-              color: 'var(--text)',
-              width: `${Math.max(input.length, 9)}ch`,
-            }}
-            placeholder="type 'help'"
-            aria-label="Terminal input"
-            autoComplete="off"
-            autoCapitalize="off"
-            spellCheck={false}
-          />
-          {!inputFocused && <Cursor />}
-        </div>
-      )}
+      <div className="mt-auto flex items-baseline gap-2 pt-1">
+        <span
+          aria-hidden
+          className="shrink-0 select-none"
+          style={{ color: 'var(--accent)' }}
+        >
+          ❯
+        </span>
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onFocus={() => setInputFocused(true)}
+          onBlur={() => setInputFocused(false)}
+          className="min-w-0 shrink grow-0 bg-transparent font-mono text-[13px] outline-none"
+          style={{
+            color: 'var(--text)',
+            width: `${Math.max(input.length, 12)}ch`,
+          }}
+          placeholder="type 'help'"
+          aria-label="Terminal input"
+          autoComplete="off"
+          autoCapitalize="off"
+          spellCheck={false}
+        />
+        {!inputFocused && <Cursor />}
+      </div>
     </div>
   )
 }

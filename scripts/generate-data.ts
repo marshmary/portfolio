@@ -18,6 +18,7 @@ import {
   GitHubStatsSchema,
   validateData,
 } from '../content/schema/types'
+import { rot13 } from '../lib/obfuscate'
 
 const CONTENT_DIR = path.join(process.cwd(), 'content')
 const OUTPUT_FILE = path.join(process.cwd(), 'app', 'data.ts')
@@ -142,6 +143,12 @@ function generateDataFile() {
         'github-stats',
       )
     }
+
+    // PII protection (plan-performance-seo-privacy F6): ship the email
+    // ROT13-obfuscated so the raw address never appears in served HTML
+    // or the JS bundle. Decode at runtime with rot13() from lib/obfuscate.
+    const safeEmail = rot13(profile.email ?? '')
+    const safeProfile = { ...profile, email: safeEmail }
 
     // Generate TypeScript file
     const output = `/**
@@ -293,9 +300,10 @@ export const CERTIFICATIONS: Certification[] = ${JSON.stringify(certifications, 
 
 export const GITHUB_STATS: GitHubStats = ${JSON.stringify(githubStats, null, 2)}
 
-export const PROFILE: Profile = ${JSON.stringify(profile, null, 2)}
+export const PROFILE: Profile = ${JSON.stringify(safeProfile, null, 2)}
 
-export const EMAIL = ${JSON.stringify(profile.email)}
+// ROT13-obfuscated — decode with rot13() from '@/lib/obfuscate'
+export const EMAIL = ${JSON.stringify(safeEmail)}
 `
 
     // Write file

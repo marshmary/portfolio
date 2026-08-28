@@ -164,9 +164,12 @@ export function Window({
                 style={{ color: 'var(--accent)' }}
               />
             </motion.span>
-            <span className="text-xs" style={{ color: 'var(--faint)' }}>
+            <h2
+              className="text-xs font-normal"
+              style={{ color: 'var(--faint)' }}
+            >
               {title}
-            </span>
+            </h2>
           </button>
         </div>
         {stackOpen && (
@@ -265,13 +268,13 @@ export function Window({
             />
           </button>
         </div>
-        <span
-          className={`mx-auto truncate text-xs ${focused ? '' : 'opacity-70'}`}
+        <h2
+          className={`mx-auto truncate text-xs font-normal ${focused ? '' : 'opacity-70'}`}
           style={{ color: focused ? 'var(--heading)' : 'var(--faint)' }}
         >
           {title}
           {win.maximized ? ' — maximized' : ''}
-        </span>
+        </h2>
         <span className="w-[52px] shrink-0" aria-hidden />
       </div>
 

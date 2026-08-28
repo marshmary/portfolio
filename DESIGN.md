@@ -93,7 +93,7 @@ muted `#aebacf` ≥ 5:1 ✅; accent `#88c0d0` ≥ 5.5:1 ✅. (Same check passes 
 | `phu@site: ~/about` | Terminal | Typed `whoami` (name — title), tagline, bio lines; live prompt (`lib/terminal-commands.ts`) |
 | `neofetch` | Info panel | ASCII logo, OS→location, Host→domain, Uptime→years experience (from `2023`), Shell→role, Packages→project count, WM→tagline, palette dots |
 | `~/projects` | File manager | Folder-per-project grid; click folder → opens `project-detail` window |
-| `btop — skills` | System monitor | Process table: `PID NAME CATEGORY CPU%` — proficiency mapped to % (Expert 95, Advanced 85, Intermediate 65, Familiar 40). **No bars** |
+| `btop — skills` | System monitor | Process tree: `devops` / `dev` main processes; each **tool** from the skill descriptions is a thread (docker, k8s, js, terraform, react…) with the parent skill's proficiency as base CPU% — live-jittering, **no bars** (owner request) |
 | `~/contact.sh` | Terminal | `$ contact --info` output (email/phone/location) + social chips + `/resume` hint |
 | `rofi` launcher | Command palette | Fuzzy search: focus windows, `email me`, `open resume`, socials, `theme: nord/gruvbox/sakura`, `reset layout` |
 | project-detail | Viewer window | Project media (video/image), description, `[stack]` tags, `+` features, live/repo links |
@@ -111,8 +111,10 @@ maximize `--green`), body, optional footer/status line, resize handle (bottom-ri
 - Close: fade out; dock icon dims; click reopens; rofi can reopen too
 - Keyboard (title bar is focusable): arrows move (16px, 1px with Shift), `Enter` maximize toggle,
   `Space` minimize toggle, traffic lights are real `<button>`s with `aria-label`s
-- ⌘/Ctrl+K opens the launcher; `Esc` closes it; launcher is `role="dialog"` with labelled input,
-  arrow-key navigation, `Enter` runs the highlighted command
+- ⌘/Ctrl+K opens the run launcher; ⌘/Ctrl+\ opens the **split box** (pick a window →
+  the desktop tiles side-by-side: focused window left, picked window right, 12px gap);
+  `Esc` closes. The launcher is `role="dialog"` with labelled input, arrow-key navigation
+  with scroll-follow (the list scrolls to keep the selected item visible), `Enter` runs.
 
 ### 5.3 Mobile / touch (<768px)
 

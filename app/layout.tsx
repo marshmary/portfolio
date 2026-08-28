@@ -19,6 +19,25 @@ export const metadata: Metadata = {
   },
   description:
     'Interactive desktop-rice portfolio of Phu Tran, DevOps Engineer. Draggable windows, riced themes, real CV content.',
+  openGraph: {
+    type: 'website',
+    url: '/',
+    siteName: 'Phu Tran — DevOps Engineer',
+    title: 'Phu Tran — DevOps Engineer',
+    description:
+      'Interactive desktop-rice portfolio of Phu Tran, DevOps Engineer. Draggable windows, riced themes, real CV content.',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Phu Tran — DevOps Engineer',
+    description:
+      'Interactive desktop-rice portfolio of Phu Tran, DevOps Engineer. Draggable windows, riced themes, real CV content.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 const geist = Geist({

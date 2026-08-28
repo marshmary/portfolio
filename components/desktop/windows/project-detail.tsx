@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { ExternalLink, Github } from 'lucide-react'
 import type { Project } from '../types'
 import { TechBadge } from '@/components/ui/tech-badge'
@@ -19,11 +20,12 @@ export function ProjectDetail({ project }: { project: Project }) {
         style={{ borderColor: 'var(--border)' }}
       >
         {hasImage ? (
-          <img
+          <Image
             src={project.images![0]}
             alt={`${project.name} preview`}
-            width="1200"
-            height="675"
+            width={1200}
+            height={675}
+            sizes="(min-width: 1200px) 560px, 90vw"
             className="aspect-video w-full object-contain"
             style={{
               background:
@@ -31,11 +33,15 @@ export function ProjectDetail({ project }: { project: Project }) {
             }}
           />
         ) : (
+          /* Cloudinary poster frames are unavailable (signed URLs return 401),
+             so no `poster`: rely on preload="metadata" to avoid a full download. */
           <video
             src={project.video}
             autoPlay
             loop
             muted
+            playsInline
+            preload="metadata"
             className="aspect-video w-full"
           />
         )}

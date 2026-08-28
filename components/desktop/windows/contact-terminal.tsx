@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { PROFILE, EMAIL, SOCIAL_LINKS } from '@/app/data'
+import { PROFILE, SOCIAL_LINKS } from '@/app/data'
+import { EmailReveal } from '@/components/ui/email-reveal'
 
 /**
  * `~/contact.sh` terminal window (DESIGN.md §4): contact lines
@@ -25,13 +26,10 @@ export function ContactTerminal() {
           >
             email
           </span>
-          <a
-            href={`mailto:${EMAIL}`}
+          <EmailReveal
             className="underline decoration-dotted underline-offset-4 transition-colors hover:text-[color:var(--accent)]"
             style={{ color: 'var(--accent)' }}
-          >
-            {EMAIL}
-          </a>
+          />
         </p>
         {PROFILE.phone && (
           <p

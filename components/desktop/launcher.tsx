@@ -1,10 +1,13 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDesktop } from './context'
 import { THEMES, WINDOW_META, type WindowId } from './types'
 import { SOCIAL_LINKS, EMAIL } from '@/app/data'
+import { rot13 } from '@/lib/obfuscate'
+
+const DECODED_EMAIL = rot13(EMAIL)
 
 interface Command {
   id: string
@@ -13,16 +16,49 @@ interface Command {
   run: () => void
 }
 
+type Mode = 'run' | 'split'
+
+const SPLITTABLE: WindowId[] = [
+  'about',
+  'neofetch',
+  'projects',
+  'skills',
+  'contact',
+]
+
 /**
  * Rofi-style command palette (DESIGN.md §4, §5):
- * ⌘/Ctrl+K opens, Esc closes, fuzzy search, arrow navigation.
+ * - ⌘/Ctrl+K opens the run palette, ⌘/Ctrl+\ opens the split box
+ * - Esc closes; arrow keys navigate; the list scrolls to follow the selection
  */
 export function Launcher() {
   const { windows, dispatch, launcherOpen } = useDesktop()
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const [mode, setMode] = useState<Mode>('run')
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(0)
+
+  const focusedId = useMemo(
+    () =>
+      SPLITTABLE.find((id) => {
+        const w = windows[id]
+        return (
+          !w.closed &&
+          !w.minimized &&
+          w.z ===
+            Math.max(
+              ...SPLITTABLE.map((wid) =>
+                windows[wid].closed || windows[wid].minimized
+                  ? 0
+                  : windows[wid].z,
+              ),
+            )
+        )
+      }) ?? 'about',
+    [windows],
+  )
 
   const focusWindow = (id: WindowId) => {
     const win = windows[id]
@@ -31,9 +67,7 @@ export function Launcher() {
   }
 
   const commands = useMemo<Command[]>(() => {
-    const focusCommands: Command[] = (
-      ['about', 'neofetch', 'projects', 'skills', 'contact'] as WindowId[]
-    ).map((id) => ({
+    const focusCommands: Command[] = SPLITTABLE.map((id) => ({
       id: `focus-${id}`,
       label: `go to ${WINDOW_META[id].label.toLowerCase()}`,
       hint: 'window',
@@ -43,10 +77,16 @@ export function Launcher() {
     return [
       ...focusCommands,
       {
+        id: 'split',
+        label: 'split view (pick a window)',
+        hint: '⌘\\',
+        run: () => setMode('split'),
+      },
+      {
         id: 'email',
         label: 'email me',
-        hint: EMAIL,
-        run: () => window.open(`mailto:${EMAIL}`),
+        hint: DECODED_EMAIL,
+        run: () => window.open(`mailto:${DECODED_EMAIL}`),
       },
       {
         id: 'resume',
@@ -76,8 +116,38 @@ export function Launcher() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [windows, dispatch, router])
 
+  const splitTargets = useMemo(
+    () => SPLITTABLE.filter((id) => id !== focusedId),
+    [focusedId],
+  )
+
+  const close = useCallback(
+    () => dispatch({ type: 'toggle-launcher', open: false }),
+    [dispatch],
+  )
+
+  const splitWith = useCallback(
+    (id: WindowId | undefined) => {
+      if (!id) return
+      dispatch({ type: 'split-windows', left: focusedId, right: id })
+      close()
+    },
+    [dispatch, focusedId, close],
+  )
+
   /** Subsequence fuzzy match, lower score = better */
-  const filtered = useMemo(() => {
+  const filtered = useMemo<Command[]>(() => {
+    if (mode === 'split') {
+      const q = query.trim().toLowerCase()
+      return splitTargets
+        .filter((id) => WINDOW_META[id].label.toLowerCase().includes(q))
+        .map<Command>((id) => ({
+          id: `split-${id}`,
+          label: WINDOW_META[id].label.toLowerCase(),
+          hint: WINDOW_META[id].title,
+          run: () => splitWith(id),
+        }))
+    }
     const q = query.trim().toLowerCase()
     if (!q) return commands
     const scored: { cmd: Command; score: number }[] = []
@@ -99,11 +169,17 @@ export function Launcher() {
       }
     }
     return scored.sort((a, b) => a.score - b.score).map((s) => s.cmd)
-  }, [query, commands])
+  }, [query, commands, mode, splitTargets, splitWith])
+
+  // Keep the selected item visible when navigating past the visible box
+  useEffect(() => {
+    const el = listRef.current?.children[selected] as HTMLElement | undefined
+    el?.scrollIntoView({ block: 'nearest' })
+  }, [selected, filtered])
 
   useEffect(() => {
     setSelected(0)
-  }, [query])
+  }, [query, mode])
 
   useEffect(() => {
     if (launcherOpen) {
@@ -118,7 +194,14 @@ export function Launcher() {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault()
-        dispatch({ type: 'toggle-launcher' })
+        setMode('run')
+        dispatch({ type: 'toggle-launcher', open: true })
+        return
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === '\\') {
+        e.preventDefault()
+        setMode('split')
+        dispatch({ type: 'toggle-launcher', open: true })
         return
       }
       if (e.key === 'Escape') {
@@ -133,23 +216,48 @@ export function Launcher() {
 
   const runCommand = (cmd: Command | undefined) => {
     if (!cmd) return
-    dispatch({ type: 'toggle-launcher', open: false })
+    if (cmd.id === 'split') {
+      setMode('split')
+      setQuery('')
+      setSelected(0)
+      inputRef.current?.focus()
+      return
+    }
+    close()
     cmd.run()
   }
+
+  const placeholder =
+    mode === 'split' ? 'split desktop with…' : 'run a command…'
 
   return (
     <div
       className="fixed inset-0 z-[10001] flex items-start justify-center pt-[14vh]"
       style={{ background: 'rgba(0,0,0,0.35)' }}
-      onPointerDown={() => dispatch({ type: 'toggle-launcher', open: false })}
+      onPointerDown={close}
     >
       <div
         className="glass w-[min(92vw,520px)] overflow-hidden"
         role="dialog"
         aria-modal="true"
-        aria-label="Command launcher"
+        aria-label={mode === 'split' ? 'Split desktop' : 'Command launcher'}
         onPointerDown={(e) => e.stopPropagation()}
       >
+        {mode === 'split' && (
+          <p
+            className="border-b px-4 pt-2.5 text-[11px]"
+            style={{
+              borderColor: 'var(--border)',
+              color: 'var(--faint)',
+            }}
+          >
+            <span aria-hidden style={{ color: 'var(--accent)' }}>
+              ❯{' '}
+            </span>
+            left: {WINDOW_META[focusedId].label.toLowerCase()} — pick the right
+            half
+          </p>
+        )}
         <input
           ref={inputRef}
           value={query}
@@ -163,25 +271,33 @@ export function Launcher() {
               setSelected((s) => Math.max(s - 1, 0))
             } else if (e.key === 'Enter') {
               e.preventDefault()
-              runCommand(filtered[selected])
+              if (mode === 'split') splitWith(splitTargets[selected])
+              else runCommand(filtered[selected])
             }
           }}
           className="w-full border-b bg-transparent px-4 py-3 font-mono text-sm outline-none"
-          style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
-          placeholder="run a command…"
-          aria-label="Search commands"
+          style={{
+            borderColor: 'var(--border)',
+            color: 'var(--text)',
+          }}
+          placeholder={placeholder}
+          aria-label={
+            mode === 'split' ? 'Pick split window' : 'Search commands'
+          }
           autoComplete="off"
           spellCheck={false}
         />
         <ul
+          ref={listRef}
           className="max-h-[46vh] overflow-y-auto p-1.5"
           role="listbox"
           id="launcher-list"
         >
           {filtered.length === 0 && (
             <li className="px-3 py-2 text-xs" style={{ color: 'var(--faint)' }}>
-              no matching command — try &apos;theme&apos; or
-              &apos;projects&apos;
+              {mode === 'split'
+                ? 'no matching window'
+                : 'no matching command — try &apos;theme&apos; or &apos;projects&apos;'}
             </li>
           )}
           {filtered.map((cmd, index) => (
@@ -218,7 +334,7 @@ export function Launcher() {
           className="border-t px-4 py-2 text-[11px]"
           style={{ borderColor: 'var(--border)', color: 'var(--faint)' }}
         >
-          ↑↓ navigate · ↵ run · esc close
+          ↑↓ navigate · ↵ {mode === 'split' ? 'split' : 'run'} · esc close
         </div>
       </div>
     </div>

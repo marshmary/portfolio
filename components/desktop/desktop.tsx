@@ -18,9 +18,9 @@ import type { WindowId } from './types'
 function DesktopCanvas() {
   const { mode, activeProject, dispatch } = useDesktop()
   const areaRef = useRef<HTMLDivElement>(null)
-  const hadSavedLayout = useRef<boolean | null>(null)
 
-  // Measure the desktop area (viewport minus bars)
+  // Measure the desktop area (viewport minus bars).
+  // set-area re-tiles automatically while the layout is not customized.
   useEffect(() => {
     const el = areaRef.current
     if (!el) return
@@ -28,15 +28,6 @@ function DesktopCanvas() {
       const rect = el.getBoundingClientRect()
       if (rect.width > 0 && rect.height > 0) {
         dispatch({ type: 'set-area', w: rect.width, h: rect.height })
-        if (hadSavedLayout.current === null) {
-          hadSavedLayout.current = Boolean(
-            localStorage.getItem('ricey-desktop-v1'),
-          )
-          if (!hadSavedLayout.current) {
-            // first visit: recompute the cascaded layout for the real area
-            dispatch({ type: 'reset-layout' })
-          }
-        }
       }
     }
     measure()

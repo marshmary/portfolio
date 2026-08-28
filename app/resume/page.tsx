@@ -7,10 +7,10 @@ import {
   EDUCATIONS,
   DEVOPS_SKILLS,
   DEV_SKILLS,
-  EMAIL,
   SOCIAL_LINKS,
   CERTIFICATIONS,
 } from '../data'
+import { EmailReveal } from '@/components/ui/email-reveal'
 
 export const metadata: Metadata = {
   title: 'Resume',
@@ -41,8 +41,7 @@ export default function ResumePage() {
           </h1>
           <p className="mt-1">{PROFILE.title}</p>
           <p className="mt-2 text-sm">
-            {EMAIL}
-            {PROFILE.phone ? ` · ${PROFILE.phone}` : ''}
+            <EmailReveal className="text-[#81a1c1] underline" />
             {PROFILE.location ? ` · ${PROFILE.location}` : ''}
           </p>
           <ul className="mt-2 flex flex-wrap gap-3 text-sm">

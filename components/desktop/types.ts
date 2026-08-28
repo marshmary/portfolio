@@ -76,49 +76,65 @@ export const WINDOW_META: Record<
   },
 }
 
-/** Hand-tuned cascaded default layout (DESIGN.md §3). */
+/**
+ * Hyprland-style tiled layout (DESIGN.md §3) — fully adaptive: purely
+ * proportional to the measured area, so it re-tiles correctly at ANY
+ * screen size. Wide aspect → 3-column mosaic; squarer aspect → about
+ * full-width row + 2×2 grid. Gap scales with the area (8–16px).
+ * project-detail floats centered above the grid as a dialog.
+ */
 export function defaultLayout(
   areaW: number,
   areaH: number,
 ): Record<WindowId, Geometry> {
-  if (areaW >= 1200) {
+  const g = clampG(Math.round(Math.min(areaW, areaH) * 0.015))
+  const detail: Geometry = {
+    x: Math.round((areaW - Math.min(680, areaW - 2 * g)) / 2),
+    y: Math.max(g, Math.round(areaH * 0.08)),
+    w: Math.min(680, areaW - 2 * g),
+    h: Math.min(540, areaH - 2 * g),
+  }
+
+  const wide = areaW >= 900 && areaW / areaH >= 1.3
+
+  if (wide) {
+    // 3-column mosaic: about spans full height; middle + right split in two rows
+    const usable = areaW - 4 * g
+    const colA = Math.round(usable * 0.34)
+    const colB = Math.round(usable * 0.36)
+    const colC = usable - colA - colB
+    const rowH = Math.round((areaH - 3 * g) / 2)
+    const x2 = g + colA + g
+    const x3 = x2 + colB + g
+    const y2 = g + rowH + g
     return {
-      about: { x: 24, y: 16, w: 560, h: Math.min(460, areaH - 24) },
-      neofetch: { x: 608, y: 16, w: 420, h: 410 },
-      projects: {
-        x: 24,
-        y: Math.min(500, Math.max(16, areaH - 320)),
-        w: Math.min(620, areaW - 700),
-        h: 300,
-      },
-      skills: {
-        x: 668,
-        y: Math.min(456, Math.max(16, areaH - 350)),
-        w: 560,
-        h: 330,
-      },
-      contact: { x: areaW - 324, y: 16, w: 308, h: 310 },
-      'project-detail': { x: 140, y: 90, w: 680, h: 500 },
+      about: { x: g, y: g, w: colA, h: areaH - 2 * g },
+      neofetch: { x: x2, y: g, w: colB, h: rowH },
+      projects: { x: x2, y: y2, w: colB, h: rowH },
+      skills: { x: x3, y: g, w: colC, h: rowH },
+      contact: { x: x3, y: y2, w: colC, h: rowH },
+      'project-detail': detail,
     }
   }
 
-  // 768–1199px: tidy 2-column grid
-  const colW = Math.floor((areaW - 48) / 2)
-  const topH = Math.floor(areaH * 0.44)
-  const botH = Math.floor(areaH * 0.5)
+  // squarer aspect: about full-width row, then 2×2 grid
+  const w2 = Math.floor((areaW - 3 * g) / 2)
+  const rowH = Math.floor((areaH - 4 * g) / 3)
+  const row2 = g + rowH + g
+  const row3 = row2 + rowH + g
+  const x2 = g + w2 + g
   return {
-    about: { x: 16, y: 8, w: colW, h: topH },
-    neofetch: { x: 32 + colW, y: 8, w: colW, h: topH },
-    contact: { x: 32 + colW, y: 16 + topH, w: colW, h: Math.floor(topH * 0.8) },
-    projects: { x: 16, y: 24 + topH, w: colW, h: botH },
-    skills: { x: 32 + colW, y: 24 + topH, w: colW, h: botH },
-    'project-detail': {
-      x: 60,
-      y: 70,
-      w: colW + 60,
-      h: Math.floor(areaH * 0.6),
-    },
+    about: { x: g, y: g, w: areaW - 2 * g, h: rowH },
+    neofetch: { x: g, y: row2, w: w2, h: rowH },
+    contact: { x: x2, y: row2, w: areaW - g - x2, h: rowH },
+    projects: { x: g, y: row3, w: w2, h: rowH },
+    skills: { x: x2, y: row3, w: areaW - g - x2, h: rowH },
+    'project-detail': detail,
   }
+}
+
+function clampG(g: number): number {
+  return Math.min(16, Math.max(8, g))
 }
 
 /** Focus priority: about gets the top z-index on first load. */

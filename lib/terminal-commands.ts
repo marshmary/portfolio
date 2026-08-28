@@ -9,6 +9,7 @@ import {
   CERTIFICATIONS,
   PROFILE,
 } from '@/app/data'
+import { rot13 } from '@/lib/obfuscate'
 
 /**
  * Terminal command engine — pure, testable (DESIGN.md §4).
@@ -143,7 +144,7 @@ export const COMMANDS: TerminalCommand[] = [
     name: 'contact',
     description: 'print contact info',
     run: () => [
-      line(`email    ${EMAIL}`, 'muted'),
+      line(`email    ${rot13(EMAIL)}`, 'muted'),
       ...(PROFILE.phone ? [line(`phone    ${PROFILE.phone}`, 'muted')] : []),
       ...(PROFILE.location
         ? [line(`location ${PROFILE.location}`, 'muted')]
@@ -167,13 +168,13 @@ export const COMMANDS: TerminalCommand[] = [
     name: 'neofetch',
     description: 'print system info',
     run: () => [
-      line('      ▲       phu@site', 'accent'),
-      line('     ▲ ▲      ──────────', 'accent'),
-      line(`    ▲   ▲     OS:      ${PROFILE.location}`, 'muted'),
-      line('   ▲     ▲    Host:    phutran.dev', 'muted'),
-      line('  ▲       ▲   Shell:   glass-term', 'muted'),
-      line(`              Title:   ${PROFILE.title}`, 'muted'),
-      line(`              Packages: ${PROJECTS.length} projects`, 'muted'),
+      line(' /\\_/\\      phu@site', 'accent'),
+      line('( o.o )     ──────────', 'accent'),
+      line(` > ^ <      OS:      ${PROFILE.location}`, 'muted'),
+      line('            Host:    phutran.dev', 'muted'),
+      line('            Shell:   glass-term', 'muted'),
+      line(`            Title:   ${PROFILE.title}`, 'muted'),
+      line(`            Packages: ${PROJECTS.length} projects`, 'muted'),
     ],
   },
   {
@@ -184,7 +185,7 @@ export const COMMANDS: TerminalCommand[] = [
       if (target === 'hire-me') {
         return [
           line('[sudo] permission granted', 'green'),
-          line(`=> ${EMAIL}`, 'accent'),
+          line(`=> ${rot13(EMAIL)}`, 'accent'),
           ...(PROFILE.phone ? [line(`=> ${PROFILE.phone}`, 'accent')] : []),
           line('looking forward to hearing from you o/', 'green'),
         ]

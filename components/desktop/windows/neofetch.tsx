@@ -40,11 +40,9 @@ export function Neofetch() {
         style={{ color: 'var(--accent)' }}
         aria-hidden
       >
-        {`      ▲
-     ▲ ▲
-    ▲   ▲
-   ▲     ▲
-  ▲       ▲`}
+        {` /\\_/\\
+( o.o )
+ > ^ <`}
       </pre>
       <div className="min-w-0 flex-1">
         <p className="text-sm" style={{ color: 'var(--heading)' }}>
