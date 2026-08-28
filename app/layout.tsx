@@ -1,14 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { Footer } from './footer'
-import { ThemeProvider } from 'next-themes'
-import { NavBar } from '@/components/ui/nav-bar'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#ffffff',
+  themeColor: '#2e3440',
 }
 
 export const metadata: Metadata = {
@@ -17,11 +14,30 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    default: 'Phu Tran portfolio',
-    template: '%s | Nim',
+    default: 'Phu Tran — DevOps Engineer',
+    template: '%s | Phu Tran',
   },
   description:
-    'Personal website built with Next.js 15, React 19 and Motion-Primitives.',
+    'Interactive desktop-rice portfolio of Phu Tran, DevOps Engineer. Draggable windows, riced themes, real CV content.',
+  openGraph: {
+    type: 'website',
+    url: '/',
+    siteName: 'Phu Tran — DevOps Engineer',
+    title: 'Phu Tran — DevOps Engineer',
+    description:
+      'Interactive desktop-rice portfolio of Phu Tran, DevOps Engineer. Draggable windows, riced themes, real CV content.',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Phu Tran — DevOps Engineer',
+    description:
+      'Interactive desktop-rice portfolio of Phu Tran, DevOps Engineer. Draggable windows, riced themes, real CV content.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 const geist = Geist({
@@ -29,10 +45,15 @@ const geist = Geist({
   subsets: ['latin'],
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const jetbrainsMono = JetBrains_Mono({
+  variable: '--font-jetbrains',
   subsets: ['latin'],
 })
+
+/**
+ * Applies the persisted theme before hydration to avoid a wallpaper flash.
+ */
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('ricey-theme');if(t!=='nord'&&t!=='gruvbox'&&t!=='sakura'){t='nord'}document.documentElement.setAttribute('data-theme',t)}catch(e){document.documentElement.setAttribute('data-theme','nord')}})()`
 
 export default function RootLayout({
   children,
@@ -40,35 +61,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="nord"
+      suppressHydrationWarning
+      className={`${geist.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
-        {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
-      <body
-        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
-      >
-        <ThemeProvider
-          enableSystem={true}
-          attribute="class"
-          storageKey="theme"
-          defaultTheme="system"
-        >
-          <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20">
-              <NavBar></NavBar>
-              {/* Header hidden on home page since name/role are in about section */}
-              {children}
-              <Footer />
-            </div>
-          </div>
-        </ThemeProvider>
-      </body>
+      <body className="tracking-tight antialiased">{children}</body>
     </html>
   )
 }

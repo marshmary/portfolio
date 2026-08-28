@@ -8,8 +8,9 @@ const nextConfig = {
   // Performance optimizations
   compress: true, // Enable gzip compression
 
-  // Enable production source maps for debugging
-  productionBrowserSourceMaps: true,
+  // Keep production source maps off (plan-performance-seo-privacy F10);
+  // re-enable locally when debugging
+  productionBrowserSourceMaps: false,
 
   // Optimize images
   images: {

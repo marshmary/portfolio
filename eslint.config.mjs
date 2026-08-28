@@ -10,6 +10,12 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: [
+      // Auto-generated from content/ (prettier would fight JSON.stringify output)
+      "app/data.ts",
+    ],
+  },
   ...compat.extends(
     "next/core-web-vitals",
     "next/typescript",

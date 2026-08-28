@@ -5,8 +5,13 @@
     "order": 0
   },
   {
+    "label": "GitLab",
+    "link": "https://gitlab.com/marshmary",
+    "order": 1
+  },
+  {
     "label": "LinkedIn",
     "link": "https://www.linkedin.com/in/phu-tran-thien/",
-    "order": 1
+    "order": 2
   }
 ]

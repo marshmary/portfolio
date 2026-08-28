@@ -18,6 +18,7 @@ import {
   GitHubStatsSchema,
   validateData,
 } from '../content/schema/types'
+import { rot13 } from '../lib/obfuscate'
 
 const CONTENT_DIR = path.join(process.cwd(), 'content')
 const OUTPUT_FILE = path.join(process.cwd(), 'app', 'data.ts')
@@ -63,9 +64,13 @@ function generateDataFile() {
       )
       .sort((a, b) => (a.order || 0) - (b.order || 0))
 
-    const educationData = readJSONDirectory(
-      path.join(CONTENT_DIR, 'experience'),
-    ).filter((data: any) => data.school) // Only education
+    // Load education - v2: dedicated directory; v1 fallback: filter experience/ by school field
+    const educationDir = path.join(CONTENT_DIR, 'education')
+    const educationData = fs.existsSync(educationDir)
+      ? readJSONDirectory(educationDir)
+      : readJSONDirectory(path.join(CONTENT_DIR, 'experience')).filter(
+          (data: any) => data.school,
+        )
 
     const education = educationData
       .map((data, index) =>
@@ -138,6 +143,12 @@ function generateDataFile() {
         'github-stats',
       )
     }
+
+    // PII protection (plan-performance-seo-privacy F6): ship the email
+    // ROT13-obfuscated so the raw address never appears in served HTML
+    // or the JS bundle. Decode at runtime with rot13() from lib/obfuscate.
+    const safeEmail = rot13(profile.email ?? '')
+    const safeProfile = { ...profile, email: safeEmail }
 
     // Generate TypeScript file
     const output = `/**
@@ -264,6 +275,7 @@ type Profile = {
   phone?: string
   location?: string
   about: string
+  highlights?: string[]
   resumeUrl?: string
   avatar?: string
 }
@@ -288,9 +300,10 @@ export const CERTIFICATIONS: Certification[] = ${JSON.stringify(certifications, 
 
 export const GITHUB_STATS: GitHubStats = ${JSON.stringify(githubStats, null, 2)}
 
-export const PROFILE: Profile = ${JSON.stringify(profile, null, 2)}
+export const PROFILE: Profile = ${JSON.stringify(safeProfile, null, 2)}
 
-export const EMAIL = ${JSON.stringify(profile.email)}
+// ROT13-obfuscated — decode with rot13() from '@/lib/obfuscate'
+export const EMAIL = ${JSON.stringify(safeEmail)}
 `
 
     // Write file

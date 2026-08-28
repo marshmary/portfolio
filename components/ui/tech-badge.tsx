@@ -1,9 +1,7 @@
 'use client'
 
 /**
- * Technology Badge Component
- *
- * Displays a technology/skill badge with consistent styling
+ * Technology badge — terminal tag style: `[ docker ]` (DESIGN.md §5).
  */
 
 interface TechBadgeProps {
@@ -17,12 +15,10 @@ export function TechBadge({
   variant = 'default',
   size = 'sm',
 }: TechBadgeProps) {
-  const variants = {
-    default: 'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300',
-    primary:
-      'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    secondary:
-      'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  const colors = {
+    default: 'var(--term-muted)',
+    primary: 'var(--accent-green)',
+    secondary: 'var(--accent-pink)',
   }
 
   const sizes = {
@@ -32,9 +28,20 @@ export function TechBadge({
 
   return (
     <span
-      className={`inline-flex items-center rounded-md font-medium ${variants[variant]} ${sizes[size]} `}
+      className={`inline-flex items-center rounded-lg border font-mono font-medium ${sizes[size]}`}
+      style={{
+        borderColor: 'var(--window-border)',
+        background: 'var(--glass-fill)',
+        color: colors[variant],
+      }}
     >
+      <span aria-hidden className="mr-1 opacity-50 select-none">
+        [
+      </span>
       {label}
+      <span aria-hidden className="ml-1 opacity-50 select-none">
+        ]
+      </span>
     </span>
   )
 }

@@ -43,9 +43,14 @@ next-env.d.ts
 #BMad template
 .bmad-core/
 .bmad-infrastructure-devops
+_bmad/
+_bmad-output/
 
 # Claude AI
 .claude/
 
 # Serena Tool
 .serena/
+
+# Playwright MCP browser artifacts
+.playwright-mcp/
