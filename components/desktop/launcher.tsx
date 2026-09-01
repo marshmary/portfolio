@@ -6,6 +6,7 @@ import { useDesktop } from './context'
 import { THEMES, WINDOW_META, type WindowId } from './types'
 import { SOCIAL_LINKS, EMAIL } from '@/app/data'
 import { rot13 } from '@/lib/obfuscate'
+import { scrollToWindow } from './scroll-to-window'
 
 const DECODED_EMAIL = rot13(EMAIL)
 
@@ -32,7 +33,13 @@ const SPLITTABLE: WindowId[] = [
  * - Esc closes; arrow keys navigate; the list scrolls to follow the selection
  */
 export function Launcher() {
-  const { windows, dispatch, launcherOpen } = useDesktop()
+  const {
+    windows,
+    dispatch,
+    launcherOpen,
+    mode: desktopMode,
+    reducedMotion,
+  } = useDesktop()
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
@@ -61,6 +68,10 @@ export function Launcher() {
   )
 
   const focusWindow = (id: WindowId) => {
+    if (desktopMode === 'stack') {
+      scrollToWindow(id, reducedMotion)
+      return
+    }
     const win = windows[id]
     if (win.closed || win.minimized) dispatch({ type: 'open', id })
     else dispatch({ type: 'focus', id })
@@ -76,12 +87,16 @@ export function Launcher() {
 
     return [
       ...focusCommands,
-      {
-        id: 'split',
-        label: 'split view (pick a window)',
-        hint: '⌘\\',
-        run: () => setMode('split'),
-      },
+      ...(desktopMode === 'desktop'
+        ? [
+            {
+              id: 'split',
+              label: 'split view (pick a window)',
+              hint: '⌘\\',
+              run: () => setMode('split'),
+            },
+          ]
+        : []),
       {
         id: 'email',
         label: 'email me',
@@ -114,7 +129,7 @@ export function Launcher() {
       },
     ]
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [windows, dispatch, router])
+  }, [windows, dispatch, router, desktopMode, reducedMotion])
 
   const splitTargets = useMemo(
     () => SPLITTABLE.filter((id) => id !== focusedId),
@@ -190,6 +205,12 @@ export function Launcher() {
     }
   }, [launcherOpen])
 
+  // Always land back in "run" mode when the palette is dismissed, so a reopen
+  // via the top-bar button never resurrects the split picker.
+  useEffect(() => {
+    if (!launcherOpen) setMode('run')
+  }, [launcherOpen])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -198,7 +219,11 @@ export function Launcher() {
         dispatch({ type: 'toggle-launcher', open: true })
         return
       }
-      if ((e.metaKey || e.ctrlKey) && e.key === '\\') {
+      if (
+        (e.metaKey || e.ctrlKey) &&
+        e.key === '\\' &&
+        desktopMode === 'desktop'
+      ) {
         e.preventDefault()
         setMode('split')
         dispatch({ type: 'toggle-launcher', open: true })
@@ -210,7 +235,7 @@ export function Launcher() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [dispatch])
+  }, [dispatch, desktopMode])
 
   if (!launcherOpen) return null
 

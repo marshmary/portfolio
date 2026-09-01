@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { RotateCcw, Search } from 'lucide-react'
 import { useDesktop } from './context'
 import { THEMES, WINDOW_META, type WindowId } from './types'
+import { scrollToWindow } from './scroll-to-window'
 
 const TASKBAR_ORDER: WindowId[] = [
   'about',
@@ -18,9 +19,11 @@ const TASKBAR_ORDER: WindowId[] = [
  * workspace indicators · clock · theme picker + layout reset + launcher.
  */
 export function TopBar() {
-  const { windows, dispatch, theme, launcherOpen } = useDesktop()
+  const { windows, dispatch, theme, launcherOpen, mode, reducedMotion } =
+    useDesktop()
   const [clock, setClock] = useState<string | null>(null)
   const [shortcut, setShortcut] = useState('Ctrl K')
+  const [scrollActive, setScrollActive] = useState<WindowId>('about')
 
   useEffect(() => {
     const isMac = /Mac|iPhone|iPad|iPod/.test(
@@ -48,6 +51,10 @@ export function TopBar() {
   }, [])
 
   const activateWindow = (id: WindowId) => {
+    if (mode === 'stack') {
+      scrollToWindow(id, reducedMotion)
+      return
+    }
     const win = windows[id]
     if (win.closed || win.minimized) {
       dispatch({ type: 'open', id })
@@ -59,6 +66,27 @@ export function TopBar() {
   const setTheme = (t: (typeof THEMES)[number]['id']) => {
     dispatch({ type: 'set-theme', theme: t })
   }
+
+  // Stack mode: track which card is scrolled into view so the workspace
+  // indicator follows the viewport (scroll position doesn't touch z-order).
+  useEffect(() => {
+    if (mode !== 'stack') return
+    const update = () => {
+      let current: WindowId = TASKBAR_ORDER[0]
+      for (const id of TASKBAR_ORDER) {
+        const el = document.getElementById(`window-${id}`)
+        if (el && el.getBoundingClientRect().top <= 64) current = id
+      }
+      setScrollActive(current)
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [mode])
 
   return (
     <header
@@ -77,7 +105,10 @@ export function TopBar() {
         {TASKBAR_ORDER.map((id, index) => {
           const win = windows[id]
           const isActive =
-            win.z === Math.max(...TASKBAR_ORDER.map((w) => windows[w].z)) &&
+            (mode === 'stack'
+              ? id === scrollActive
+              : win.z ===
+                Math.max(...TASKBAR_ORDER.map((w) => windows[w].z))) &&
             !win.closed &&
             !win.minimized
           const dimmed = win.closed || win.minimized

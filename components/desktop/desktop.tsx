@@ -126,9 +126,15 @@ function DesktopCanvas() {
           className="relative z-10 mx-auto flex w-full max-w-2xl flex-col gap-4 px-3 pt-14 pb-8"
           aria-label="Desktop (mobile card stack)"
         >
-          {windowDefs.map(({ id, title, body, footer }) =>
+          {windowDefs.map(({ id, title, delay, body, footer }) =>
             id === 'project-detail' ? null : (
-              <Window key={id} id={id} title={title} footer={footer}>
+              <Window
+                key={id}
+                id={id}
+                title={title}
+                openDelay={delay}
+                footer={footer}
+              >
                 {body}
               </Window>
             ),

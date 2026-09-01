@@ -144,7 +144,18 @@ export function Window({
 
   if (mode === 'stack') {
     return (
-      <section className="glass overflow-hidden" aria-label={title}>
+      <motion.section
+        id={`window-${id}`}
+        className="glass scroll-mt-14 overflow-hidden"
+        aria-label={title}
+        initial={reducedMotion ? false : { y: 16, scale: 0.96 }}
+        animate={{ y: 0, scale: 1 }}
+        transition={{
+          duration: reducedMotion ? 0 : 0.15,
+          delay: reducedMotion ? 0 : openDelay / 1000,
+          ease: 'easeOut',
+        }}
+      >
         <div
           className="flex h-10 shrink-0 items-center gap-2 border-b px-3"
           style={{ borderColor: 'var(--border)' }}
@@ -179,7 +190,7 @@ export function Window({
             {children}
           </div>
         )}
-      </section>
+      </motion.section>
     )
   }
 
